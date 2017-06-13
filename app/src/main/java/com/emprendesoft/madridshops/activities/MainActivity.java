@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.emprendesoft.madridshops.R;
+import com.emprendesoft.madridshops.navigator.Navigator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d(MainActivity.class.getCanonicalName(), "Hello");
+
+//                Intent i = new Intent(MainActivity.this, ShopListActivity.class);
+//                startActivity(i);
+                Navigator.navigateFromMainActivityToShopListActivity(MainActivity.this);
             }
         });
 
