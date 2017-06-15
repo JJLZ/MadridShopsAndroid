@@ -7,6 +7,7 @@ public class Shop {
     private long id;
     private String name;
     private String imageUrl;
+    private String logoUrl;
     private String address;
     private String url;
     private String description;
@@ -49,6 +50,15 @@ public class Shop {
 
     public Shop setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public Shop setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
         return this;
     }
 
