@@ -1,4 +1,4 @@
-package com.emprendesoft.domain;
+package com.emprendesoft.madridshops.domain;
 
 import com.emprendesoft.madridshops.domain.model.Shop;
 import com.emprendesoft.madridshops.domain.model.Shops;
