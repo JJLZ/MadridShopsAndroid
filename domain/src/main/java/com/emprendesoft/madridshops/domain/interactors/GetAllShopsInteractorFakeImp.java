@@ -15,7 +15,7 @@ public class GetAllShopsInteractorFakeImp implements GetAllShopsInteractor {
 
         for (int i = 0; i < 10; i++) {
 
-            Shop shop = Shop.of(i, "My shop " + i);
+            Shop shop = Shop.of(i, "My shop " + i).setLogoUrl("https://www.jumblebee.co.uk/site/wp-content/uploads/2014/06/JB-FE-Shop_10.png");
             shops.add(shop);
         }
 
