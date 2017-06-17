@@ -1,16 +1,20 @@
 package com.emprendesoft.madridshops.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.adapters.ShopsAdapter;
+import com.emprendesoft.madridshops.domain.model.Shop;
 import com.emprendesoft.madridshops.domain.model.Shops;
+import com.emprendesoft.madridshops.views.OnElementClick;
 
 public class ShopsFragment extends Fragment {
 
@@ -40,6 +44,13 @@ public class ShopsFragment extends Fragment {
 
         adapter = new ShopsAdapter(shops, getActivity());
         shopRecyclerView.setAdapter(adapter);
+
+        adapter.setONClickListener(new OnElementClick<Shop>() {
+            @Override
+            public void clickedOn(@NonNull Shop shop, int position) {
+                Log.d("Click", shop.getName());
+            }
+        });
     }
 
 }

@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.domain.model.Shop;
 import com.emprendesoft.madridshops.domain.model.Shops;
+import com.emprendesoft.madridshops.views.OnElementClick;
 import com.emprendesoft.madridshops.views.ShopRowViewHolder;
 
 public class ShopsAdapter extends RecyclerView.Adapter<ShopRowViewHolder> {
 
     private Shops shops;
     private LayoutInflater inflater;
+    private OnElementClick<Shop> listener;
 
     public ShopsAdapter(final Shops shops, final Context context) {
 
@@ -32,10 +34,20 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopRowViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ShopRowViewHolder shopRow, int position) {
+    public void onBindViewHolder(ShopRowViewHolder shopRow, final int position) {
 
-        Shop shop = this.shops.get(position);
+        final Shop shop = this.shops.get(position);
         shopRow.setShop(shop);
+
+        shopRow.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (listener != null) {
+                    listener.clickedOn(shop, position);
+                }
+            }
+        });
     }
 
     @Override
@@ -48,4 +60,39 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopRowViewHolder> {
 
         return 0;
     }
+
+    public void setONClickListener(OnElementClick<Shop> listener) {
+
+        this.listener = listener;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
