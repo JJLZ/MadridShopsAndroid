@@ -35,6 +35,8 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopRowViewHolder> {
 
     @Override
     public void onBindViewHolder(ShopRowViewHolder shopRow, final int position) {
+        // Called by RecyclerView to display the data at the specified position.
+        // This method should update the contents of the itemView to reflect the item at the given position.
 
         final Shop shop = this.shops.get(position);
         shopRow.setShop(shop);

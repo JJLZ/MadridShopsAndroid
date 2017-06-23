@@ -52,5 +52,4 @@ public class ShopsFragment extends Fragment {
             }
         });
     }
-
 }
