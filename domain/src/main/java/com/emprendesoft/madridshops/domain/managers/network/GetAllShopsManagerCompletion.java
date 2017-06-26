@@ -2,10 +2,11 @@ package com.emprendesoft.madridshops.domain.managers.network;
 
 import android.support.annotation.NonNull;
 
-import com.emprendesoft.madridshops.domain.model.Shops;
+import com.emprendesoft.madridshops.domain.managers.network.entities.ShopEntity;
+
+import java.util.List;
 
 public interface GetAllShopsManagerCompletion {
 
-    // TODO: quitar shops de aquí
-    void completion(@NonNull final Shops shops);
+    void completion(@NonNull final List<ShopEntity> shopEntities);
 }

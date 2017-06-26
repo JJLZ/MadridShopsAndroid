@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractor;
 import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractorCompletion;
-import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractorFakeImp;
+import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractorImp;
 import com.emprendesoft.madridshops.domain.interactors.InteractorErrorCompletion;
+import com.emprendesoft.madridshops.domain.managers.network.GetAllShopsManagerImpl;
+import com.emprendesoft.madridshops.domain.managers.network.NetworkManager;
 import com.emprendesoft.madridshops.domain.model.Shops;
 import com.emprendesoft.madridshops.fragments.ShopsFragment;
 
@@ -23,7 +25,8 @@ public class ShopListActivity extends AppCompatActivity {
         shopsFragment = (ShopsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_shop_list__fragment_shops);
 
         // obtain shop list
-        GetAllShopsInteractor getAllShopsInteractor = new GetAllShopsInteractorFakeImp();
+        NetworkManager manager = new GetAllShopsManagerImpl(this);
+        GetAllShopsInteractor getAllShopsInteractor = new GetAllShopsInteractorImp(manager);
         getAllShopsInteractor.execute(
                 new GetAllShopsInteractorCompletion() {
                     @Override

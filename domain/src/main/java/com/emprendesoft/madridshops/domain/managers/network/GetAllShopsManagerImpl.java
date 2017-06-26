@@ -11,8 +11,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.emprendesoft.domain.R;
+import com.emprendesoft.madridshops.domain.managers.network.entities.ShopEntity;
+import com.emprendesoft.madridshops.domain.managers.network.jsonparser.ShopsJsonParser;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class GetAllShopsManagerImpl implements NetworkManager {
 
@@ -24,7 +27,7 @@ public class GetAllShopsManagerImpl implements NetworkManager {
     }
 
     @Override
-    public void getShopsFromServer(@NonNull GetAllShopsManagerCompletion completion, @Nullable ManagerErrorCompletion errorCompletion) {
+    public void getShopsFromServer(@NonNull final GetAllShopsManagerCompletion completion, @Nullable final ManagerErrorCompletion errorCompletion) {
 
         String url = weakContext.get().getString(R.string.shops_url);
 
@@ -37,12 +40,23 @@ public class GetAllShopsManagerImpl implements NetworkManager {
                     @Override
                     public void onResponse(String response) {
                         Log.d("JSON", response);
+//                        Log.d("JSON", Thread.currentThread().getName());
+
+                        ShopsJsonParser parser = new ShopsJsonParser();
+                        List<ShopEntity> entities = parser.parse(response);
+
+                        if (completion != null) {
+                            completion.completion(entities);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("JSON", error.toString());
+                        if (errorCompletion != null) {
+                            errorCompletion.onError(error.getMessage());
+                        }
                     }
                 }
         );
@@ -50,3 +64,33 @@ public class GetAllShopsManagerImpl implements NetworkManager {
         queue.add(request);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
