@@ -1,7 +1,6 @@
 package com.emprendesoft.madridshops;
 
 import android.support.multidex.MultiDexApplication;
-import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 
@@ -14,8 +13,8 @@ public class MadridShopsApp extends MultiDexApplication {
         super.onCreate();
 
         // init app
-        Log.d(APP_NAME, "App starting");
-        Picasso.with(getApplicationContext()).setLoggingEnabled(true);
+//        Log.d(APP_NAME, "App starting");
+//        Picasso.with(getApplicationContext()).setLoggingEnabled(true);
         Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);
     }
 

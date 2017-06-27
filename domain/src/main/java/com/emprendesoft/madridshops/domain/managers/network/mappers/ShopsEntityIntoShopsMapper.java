@@ -9,7 +9,7 @@ import com.emprendesoft.madridshops.domain.model.Shops;
 import java.util.List;
 
 public class ShopsEntityIntoShopsMapper {
-    
+
     public static Shops map(final List<ShopEntity> shopEntities) {
 
         Shops shops = new Shops();

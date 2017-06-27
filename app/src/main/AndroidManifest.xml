@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".activities.ShopListActivity">
         </activity>
+        <activity android:name=".activities.ShopDetailActivity">
+        </activity>
     </application>
 
 </manifest>
