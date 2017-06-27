@@ -3,6 +3,8 @@ package com.emprendesoft.madridshops.activities;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractor;
@@ -17,7 +19,14 @@ import com.emprendesoft.madridshops.fragments.ShopsFragment;
 import com.emprendesoft.madridshops.navigator.Navigator;
 import com.emprendesoft.madridshops.views.OnElementClick;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ShopListActivity extends AppCompatActivity {
+
+    @BindView(R.id.activity_shop_list__progress_bar)
+    ProgressBar mProgressBar;
+
 
     ShopsFragment shopsFragment;
 
@@ -26,15 +35,25 @@ public class ShopListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_list);
 
+        ButterKnife.bind(this);
+
         shopsFragment = (ShopsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_shop_list__fragment_shops);
 
-        // obtain shop list
+        obtainShopList();
+    }
+
+    private void obtainShopList() {
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
         NetworkManager manager = new GetAllShopsManagerImpl(this);
         GetAllShopsInteractor getAllShopsInteractor = new GetAllShopsInteractorImp(manager);
         getAllShopsInteractor.execute(
                 new GetAllShopsInteractorCompletion() {
                     @Override
                     public void completion(Shops shops) {
+
+                        mProgressBar.setVisibility(View.GONE);
 
                         shopsFragment.setShops(shops);
 
@@ -50,7 +69,7 @@ public class ShopListActivity extends AppCompatActivity {
                 new InteractorErrorCompletion() {
                     @Override
                     public void onError(String errorDescription) {
-
+                        mProgressBar.setVisibility(View.GONE);
                     }
                 }
         );

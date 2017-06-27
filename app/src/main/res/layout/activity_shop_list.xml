@@ -19,4 +19,12 @@
         >
     </fragment>
 
+    <ProgressBar
+        android:id="@+id/activity_shop_list__progress_bar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        />
+
 </RelativeLayout>

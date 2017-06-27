@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        launchInBackgroundThread();
+//        launchInBackgroundThread();
     }
 
     private void launchInBackgroundThread() {
