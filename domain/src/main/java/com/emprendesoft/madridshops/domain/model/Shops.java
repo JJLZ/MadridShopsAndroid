@@ -1,5 +1,7 @@
 package com.emprendesoft.madridshops.domain.model;
 
+import android.support.annotation.NonNull;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +18,17 @@ public class Shops implements ShopsIterable, ShopsUpdatable {
 
         if (shops == null) {
             shops = new LinkedList<>();
+        }
+
+        return shops;
+    }
+
+    public static Shops from(@NonNull final List<Shop> shopList) {
+
+        final Shops shops = new Shops();
+
+        for (final Shop shop : shopList) {
+            shops.add(shop);
         }
 
         return shops;
