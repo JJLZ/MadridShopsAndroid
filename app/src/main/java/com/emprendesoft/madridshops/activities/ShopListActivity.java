@@ -7,10 +7,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.emprendesoft.madridshops.R;
+import com.emprendesoft.madridshops.domain.interactors.GetIfAllShopsAreCachedInteractor;
+import com.emprendesoft.madridshops.domain.interactors.GetIfAllShopsAreCachedInteractorImpl;
 import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractor;
 import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractorCompletion;
 import com.emprendesoft.madridshops.domain.interactors.GetAllShopsInteractorImp;
 import com.emprendesoft.madridshops.domain.interactors.InteractorErrorCompletion;
+import com.emprendesoft.madridshops.domain.interactors.SetAllShopsAreCachedInteractor;
+import com.emprendesoft.madridshops.domain.interactors.SetAllShopsAreCachedInteractorImpl;
 import com.emprendesoft.madridshops.domain.managers.network.GetAllShopsManagerImpl;
 import com.emprendesoft.madridshops.domain.managers.network.NetworkManager;
 import com.emprendesoft.madridshops.domain.model.Shop;
@@ -39,7 +43,21 @@ public class ShopListActivity extends AppCompatActivity {
 
         shopsFragment = (ShopsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_shop_list__fragment_shops);
 
-        obtainShopList();
+        GetIfAllShopsAreCachedInteractor getIfAllShopsAreCachedInteractor = new GetIfAllShopsAreCachedInteractorImpl(this);
+        getIfAllShopsAreCachedInteractor.execute(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // all cached already, no need to download things, just read from DB
+                                                }
+                                            }, new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // nothing cached yet
+                                                    obtainShopList();
+                                                }
+                                            }
+
+        );
     }
 
     private void obtainShopList() {
@@ -54,6 +72,11 @@ public class ShopListActivity extends AppCompatActivity {
                     public void completion(Shops shops) {
 
                         mProgressBar.setVisibility(View.GONE);
+
+                        // TODO: persist in cache all shops
+
+                        SetAllShopsAreCachedInteractor setAllShopsAreCachedInteractor = new SetAllShopsAreCachedInteractorImpl(getBaseContext());
+                        setAllShopsAreCachedInteractor.execute(true);
 
                         shopsFragment.setShops(shops);
 
