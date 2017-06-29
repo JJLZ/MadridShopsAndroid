@@ -11,12 +11,21 @@
     tools:context="com.emprendesoft.madridshops.activities.ShopListActivity">
 
     <fragment
+        android:id="@+id/activity_shop_list__map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        >
+    </fragment>
+
+    <fragment
         android:id="@+id/activity_shop_list__fragment_shops"
         android:name="com.emprendesoft.madridshops.fragments.ShopsFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         tools:layout="@layout/fragment_shops"
-        >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
     </fragment>
 
     <ProgressBar
