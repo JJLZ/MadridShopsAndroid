@@ -37,10 +37,7 @@ import com.emprendesoft.madridshops.views.OnElementClick;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
@@ -164,13 +161,9 @@ public class ShopListActivity extends AppCompatActivity {
             @Override
             public void onMapReady(GoogleMap googleMap) {
 
-                // check if map is created successfully or not
                 if (googleMap == null) {
-                    Toast.makeText(getApplicationContext(),
-                            "Sorry! unable to create maps", Toast.LENGTH_SHORT)
-                            .show();
+                    Toast.makeText(getApplicationContext(), "Sorry! unable to create maps", Toast.LENGTH_SHORT).show();
                 } else {
-
                     map = googleMap;
                     checkCacheData();
                     setupMap(googleMap);
@@ -181,33 +174,11 @@ public class ShopListActivity extends AppCompatActivity {
 
     private void setupMap(GoogleMap map) {
 
-//        if (ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//                ActivityCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            // TODO: Consider calling
-//            //    ActivityCompat#requestPermissions
-//            // here to request the missing permissions, and then overriding
-//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-//            //                                          int[] grantResults)
-//            // to handle the case where the user grants the permission. See the documentation
-//            // for ActivityCompat#requestPermissions for more details.
-//            return;
-//        }
-
         MapUtil.centerMapInPosition(map, 40.411335, -3.674908);
         map.setBuildingsEnabled(true);
         map.setMapType(MAP_TYPE_NORMAL);
         map.getUiSettings().setRotateGesturesEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
-//        map.setMyLocationEnabled(true);
-
-        MarkerOptions retiroMarkerOptions = new MarkerOptions().position(new LatLng(40.411335, -3.674908)).title("Hello world").
-                icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-
-        MarkerOptions retiroMarkerOptions2 = new MarkerOptions().position(new LatLng(40.43, -3.674908)).title("Hello world").
-                icon(BitmapDescriptorFactory.fromResource(android.R.drawable.ic_menu_camera));
-
-        map.addMarker(retiroMarkerOptions);
-        map.addMarker(retiroMarkerOptions2);
     }
 
     private void putShopPinsOnMap(Shops shops) {
