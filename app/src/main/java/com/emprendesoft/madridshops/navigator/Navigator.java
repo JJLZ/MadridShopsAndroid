@@ -3,6 +3,7 @@ package com.emprendesoft.madridshops.navigator;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.emprendesoft.madridactivities.activities.ActivityListActivity;
 import com.emprendesoft.madridshops.activities.MainActivity;
 import com.emprendesoft.madridshops.activities.ShopDetailActivity;
 import com.emprendesoft.madridshops.activities.ShopListActivity;
@@ -31,5 +32,15 @@ public class Navigator {
         shopListActivity.startActivity(i);
 
         return i;
+    }
+
+    public static Intent navigateFromMainActivityToActivityListActivity(@NonNull final MainActivity mainActivity) {
+
+        assert (mainActivity != null);
+
+        final Intent intent = new Intent(mainActivity, ActivityListActivity.class);
+        mainActivity.startActivity(intent);
+
+        return intent;
     }
 }

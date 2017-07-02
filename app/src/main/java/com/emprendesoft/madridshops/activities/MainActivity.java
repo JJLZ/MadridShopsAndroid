@@ -44,10 +44,6 @@ public class MainActivity extends AppCompatActivity {
         shopsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(MainActivity.class.getCanonicalName(), "Hello");
-
-//                Intent i = new Intent(MainActivity.this, ShopListActivity.class);
-//                startActivity(i);
                 Navigator.navigateFromMainActivityToShopListActivity(MainActivity.this);
             }
         });
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         activitiesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(MainActivity.class.getCanonicalName(), "Hello Activities");
+                Navigator.navigateFromMainActivityToActivityListActivity(MainActivity.this);
             }
         });
 
