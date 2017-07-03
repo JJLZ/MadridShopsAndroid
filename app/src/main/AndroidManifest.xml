@@ -53,7 +53,10 @@
             android:parentActivityName=".activities.ShopListActivity">
         </activity>
 
-        <activity android:name="com.emprendesoft.madridactivities.activities.ActivityListActivity">
+        <activity android:name="com.emprendesoft.madridactivities.activities.ActivityListActivity" android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"/>
         </activity>
 
         <!-- Google Maps -->

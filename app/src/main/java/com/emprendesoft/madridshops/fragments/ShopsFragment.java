@@ -22,7 +22,6 @@ public class ShopsFragment extends Fragment {
 
     private RecyclerView shopRecyclerView;
     private ShopsAdapter adapter;
-    private Shops shops;
 
     public ShopsFragment() {
         // Required empty public constructor
@@ -41,8 +40,6 @@ public class ShopsFragment extends Fragment {
     }
 
     public void setShops(Shops shops) {
-
-        this.shops = shops;
 
         adapter = new ShopsAdapter(shops, getActivity());
         shopRecyclerView.setAdapter(adapter);
