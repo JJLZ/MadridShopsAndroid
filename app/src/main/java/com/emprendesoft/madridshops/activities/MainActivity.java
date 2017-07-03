@@ -7,12 +7,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.emprendesoft.madridshops.R;
-import com.emprendesoft.madridshops.domain.interactors.ClearCacheInteractor;
-import com.emprendesoft.madridshops.domain.interactors.ClearCacheInteractorImp;
-import com.emprendesoft.madridshops.domain.interactors.SetAllShopsAreCachedInteractor;
-import com.emprendesoft.madridshops.domain.interactors.SetAllShopsAreCachedInteractorImpl;
-import com.emprendesoft.madridshops.domain.managers.cache.ClearCacheManager;
-import com.emprendesoft.madridshops.domain.managers.cache.ClearCacheManagerDAOImp;
+import com.emprendesoft.madridshops.domain.shops.interactors.ClearCacheInteractor;
+import com.emprendesoft.madridshops.domain.shops.interactors.ClearCacheInteractorImp;
+import com.emprendesoft.madridshops.domain.shops.interactors.SetAllShopsAreCachedInteractor;
+import com.emprendesoft.madridshops.domain.shops.interactors.SetAllShopsAreCachedInteractorImpl;
+import com.emprendesoft.madridshops.domain.shops.managers.cache.ClearCacheManager;
+import com.emprendesoft.madridshops.domain.shops.managers.cache.ClearCacheManagerDAOImp;
 import com.emprendesoft.madridshops.navigator.Navigator;
 
 import java.io.BufferedReader;

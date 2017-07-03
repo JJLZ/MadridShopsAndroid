@@ -2,16 +2,24 @@ package com.emprendesoft.madridactivities.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.emprendesoft.madridactivities.fragments.ActivitiesFragment;
 import com.emprendesoft.madridshops.R;
-import com.emprendesoft.madridshops.domain.model.Activities;
-import com.emprendesoft.madridshops.domain.model.Activity;
+import com.emprendesoft.madridshops.domain.activities.model.Activities;
+import com.emprendesoft.madridshops.domain.activities.model.Activity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ActivityListActivity extends AppCompatActivity {
+
+    @BindView(R.id.activity_activity_list__progress_bar)
+    ProgressBar mProgressBar;
 
     ActivitiesFragment mActivitiesFragment;
 
@@ -19,6 +27,8 @@ public class ActivityListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
+
+        ButterKnife.bind(this);
 
         mActivitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__fragment_activities);
 
@@ -38,4 +48,41 @@ public class ActivityListActivity extends AppCompatActivity {
         Activities activities1 = Activities.from(activities);
         mActivitiesFragment.setActivities(activities1);
     }
+
+    private void obtainActivityList() {
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

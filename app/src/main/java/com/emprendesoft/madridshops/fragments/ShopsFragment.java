@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 
 import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.adapters.ShopsAdapter;
-import com.emprendesoft.madridshops.domain.model.Shop;
-import com.emprendesoft.madridshops.domain.model.Shops;
+import com.emprendesoft.madridshops.domain.shops.model.Shop;
+import com.emprendesoft.madridshops.domain.shops.model.Shops;
 import com.emprendesoft.madridshops.views.OnElementClick;
 
 public class ShopsFragment extends Fragment {

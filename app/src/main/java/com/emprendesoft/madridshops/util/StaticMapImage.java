@@ -2,7 +2,7 @@ package com.emprendesoft.madridshops.util;
 
 import android.support.annotation.NonNull;
 
-import com.emprendesoft.madridshops.domain.model.Shop;
+import com.emprendesoft.madridshops.domain.shops.model.Shop;
 
 public class StaticMapImage {
 

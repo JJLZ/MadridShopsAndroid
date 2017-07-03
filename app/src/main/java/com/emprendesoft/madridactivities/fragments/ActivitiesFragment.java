@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 
 import com.emprendesoft.madridactivities.adapters.ActivitiesAdapter;
 import com.emprendesoft.madridshops.R;
-import com.emprendesoft.madridshops.domain.model.Activities;
-import com.emprendesoft.madridshops.domain.model.Activity;
+import com.emprendesoft.madridshops.domain.activities.model.Activities;
+import com.emprendesoft.madridshops.domain.activities.model.Activity;
 import com.emprendesoft.madridshops.views.OnElementClick;
 
 public class ActivitiesFragment extends Fragment {

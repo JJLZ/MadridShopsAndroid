@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.emprendesoft.madridshops.R;
-import com.emprendesoft.madridshops.domain.model.Shop;
+import com.emprendesoft.madridshops.domain.shops.model.Shop;
 import com.emprendesoft.madridshops.util.Constants;
 import com.emprendesoft.madridshops.util.StaticMapImage;
 import com.squareup.picasso.Picasso;

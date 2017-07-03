@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.emprendesoft.madridshops.R;
-import com.emprendesoft.madridshops.domain.model.Activity;
+import com.emprendesoft.madridshops.domain.activities.model.Activity;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 

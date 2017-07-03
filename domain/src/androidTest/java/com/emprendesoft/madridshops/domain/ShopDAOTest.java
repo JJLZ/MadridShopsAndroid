@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.emprendesoft.madridshops.domain.managers.db.ShopDAO;
-import com.emprendesoft.madridshops.domain.model.Shop;
+import com.emprendesoft.madridshops.domain.shops.managers.db.ShopDAO;
+import com.emprendesoft.madridshops.domain.shops.model.Shop;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

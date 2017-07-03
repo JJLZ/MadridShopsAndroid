@@ -7,7 +7,7 @@ import com.emprendesoft.madridactivities.activities.ActivityListActivity;
 import com.emprendesoft.madridshops.activities.MainActivity;
 import com.emprendesoft.madridshops.activities.ShopDetailActivity;
 import com.emprendesoft.madridshops.activities.ShopListActivity;
-import com.emprendesoft.madridshops.domain.model.Shop;
+import com.emprendesoft.madridshops.domain.shops.model.Shop;
 
 import static com.emprendesoft.madridshops.util.Constants.INTENT_SHOP_DETAIL;
 

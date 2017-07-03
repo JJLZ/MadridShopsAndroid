@@ -1,7 +1,7 @@
 package com.emprendesoft.madridshops.util.map.model;
 
-import com.emprendesoft.madridshops.domain.model.Shop;
-import com.emprendesoft.madridshops.domain.model.Shops;
+import com.emprendesoft.madridshops.domain.shops.model.Shop;
+import com.emprendesoft.madridshops.domain.shops.model.Shops;
 import com.emprendesoft.madridshops.util.map.MapPinnable;
 
 import java.util.ArrayList;
