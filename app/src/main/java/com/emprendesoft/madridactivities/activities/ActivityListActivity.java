@@ -1,17 +1,20 @@
 package com.emprendesoft.madridactivities.activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.emprendesoft.madridactivities.fragments.ActivitiesFragment;
 import com.emprendesoft.madridshops.R;
+import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitesInteractor;
+import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesInteractorCompletion;
+import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesInteractorImp;
 import com.emprendesoft.madridshops.domain.activities.model.Activities;
-import com.emprendesoft.madridshops.domain.activities.model.Activity;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.emprendesoft.madridshops.domain.activities.network.ANetworkManager;
+import com.emprendesoft.madridshops.domain.activities.network.GetAllActivitiesManagerImpl;
+import com.emprendesoft.madridshops.domain.shops.interactors.InteractorErrorCompletion;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,27 +36,37 @@ public class ActivityListActivity extends AppCompatActivity {
         mActivitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__fragment_activities);
 
         // TODO: temporal
-        configActivitiesFragment();
+        obtainActivityList();
     }
 
     // TODO: temporal
-    private void configActivitiesFragment() {
+    private void configActivitiesFragment(Activities activities) {
 
-        List<Activity> activities = new ArrayList<>();
-        Activity activity1 = Activity.of(1, "Fist activity");
-        Activity activity2 = Activity.of(2, "Second activity");
-        activities.add(activity1);
-        activities.add(activity2);
-
-        Activities activities1 = Activities.from(activities);
-        mActivitiesFragment.setActivities(activities1);
+        mActivitiesFragment.setActivities(activities);
     }
 
     private void obtainActivityList() {
 
         mProgressBar.setVisibility(View.VISIBLE);
 
+        ANetworkManager manager = new GetAllActivitiesManagerImpl(this);
+        GetAllActivitesInteractor getAllActivitesInteractor = new GetAllActivitiesInteractorImp(manager);
+        getAllActivitesInteractor.execute(
+                new GetAllActivitiesInteractorCompletion() {
+                    @Override
+                    public void completion(@NonNull Activities activities) {
 
+                        // TODO: temporal
+                        configActivitiesFragment(activities);
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                }, new InteractorErrorCompletion() {
+                    @Override
+                    public void onError(String errorDescription) {
+                        mProgressBar.setVisibility(View.GONE);
+                    }
+                }
+        );
     }
 }
 

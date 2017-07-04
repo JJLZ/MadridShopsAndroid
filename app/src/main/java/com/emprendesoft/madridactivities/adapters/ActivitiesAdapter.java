@@ -47,14 +47,12 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivityRowViewHolde
                 }
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
 
         if (mActivities != null) {
-
             return (int) mActivities.size();
         }
 
