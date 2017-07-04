@@ -12,9 +12,12 @@ import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivite
 import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesInteractorCompletion;
 import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesInteractorImp;
 import com.emprendesoft.madridshops.domain.activities.model.Activities;
+import com.emprendesoft.madridshops.domain.activities.model.Activity;
 import com.emprendesoft.madridshops.domain.activities.network.ANetworkManager;
 import com.emprendesoft.madridshops.domain.activities.network.GetAllActivitiesManagerImpl;
 import com.emprendesoft.madridshops.domain.shops.interactors.InteractorErrorCompletion;
+import com.emprendesoft.madridshops.navigator.Navigator;
+import com.emprendesoft.madridshops.views.OnElementClick;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +46,13 @@ public class ActivityListActivity extends AppCompatActivity {
     private void configActivitiesFragment(Activities activities) {
 
         mActivitiesFragment.setActivities(activities);
+
+        mActivitiesFragment.setOnElementClickListener(new OnElementClick<Activity>() {
+            @Override
+            public void clickedOn(@NonNull Activity element, int position) {
+                Navigator.navigateFromActivityListActivityToActivityDetailActivity(ActivityListActivity.this, element, position);
+            }
+        });
     }
 
     private void obtainActivityList() {

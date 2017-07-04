@@ -39,7 +39,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.ShopListActivity"
             android:parentActivityName=".activities.MainActivity">
@@ -47,16 +46,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity"/>
         </activity>
-
         <activity
             android:name=".activities.ShopDetailActivity"
             android:parentActivityName=".activities.ShopListActivity">
         </activity>
-
-        <activity android:name="com.emprendesoft.madridactivities.activities.ActivityListActivity" android:parentActivityName=".activities.MainActivity">
+        <activity
+            android:name="com.emprendesoft.madridactivities.activities.ActivityListActivity"
+            android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity"/>
+        </activity>
+
+        <activity android:name="com.emprendesoft.madridactivities.activities.ActivityDetailActivity"
+            android:parentActivityName="com.emprendesoft.madridactivities.activities.ActivityListActivity">
         </activity>
 
         <!-- Google Maps -->

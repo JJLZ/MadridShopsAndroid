@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="com.emprendesoft.madridactivities.activities.ActivityDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/activity_detail_activity__activity_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                tools:src="@drawable/activity_placeholder"
+                />
+
+            <TextView
+                android:id="@+id/activity_detail_activity__activity_name"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:alpha="0.8"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center_horizontal|bottom"
+                android:textColor="@android:color/white"
+                android:textSize="40sp"
+                tools:text="El Corte Chino (sin premio)"
+                />
+
+            <TextView
+                android:id="@+id/activity_detail_activity__activity_address"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/activity_detail_activity__activity_name"
+                tools:text="Address"
+                />
+
+            <TextView
+                android:id="@+id/activity_detail_activity__activity_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/activity_detail_activity__activity_address"
+                tools:text="Description"
+                />
+
+            <ImageView
+                android:id="@+id/activity_detail_activity__activity_map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/activity_detail_activity__activity_description"
+                tools:src="@drawable/map_placeholder"
+                />
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
