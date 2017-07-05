@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="black">#000000</color>
+    <color name="gradient_start_color_button">#0079BF</color>
+    <color name="gradient_end_color_button">#0266A2</color>
 </resources>
