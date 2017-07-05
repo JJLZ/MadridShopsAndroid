@@ -29,15 +29,15 @@ public class DBHelper extends SQLiteOpenHelper {
         // API Level >= 16
         db.setForeignKeyConstraintsEnabled(true);
 
-        // API Level lower than 16
+        // API Level < 16
 //        db.execSQL("PRAGMA foreing_keys = ON");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        for (String script : DBConstants.CREATE_DATABASE_SCRIPTS) {
-
+        for (String script : DBConstants.CREATE_DATABASE_SCRIPTS)
+        {
             db.execSQL(script);
         }
     }
@@ -45,12 +45,13 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        if (oldVersion == 1 && newVersion == 2) {   // v1 --> v2
-
+        if (oldVersion == 1 && newVersion == 2) // v1 --> v2
+        {
             db.execSQL(DBConstants.UPDATE_DATABASE_SCRIPTS);
-        } else if (oldVersion == 1 && newVersion == 3) {
-
-
+        }
+        else if (oldVersion == 1 && newVersion == 3)
+        {
+            // ...
         }
     }
 

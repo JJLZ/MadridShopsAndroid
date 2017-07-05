@@ -107,12 +107,6 @@ public class Activity implements Serializable {
         this.longitude = longitude;
         return this;
     }
-
-// TODO: ver si hace falta
-//    public Activity setLogitude(float logitude) {
-//        this.longitude = logitude;
-//        return this;
-//    }
 }
 
 

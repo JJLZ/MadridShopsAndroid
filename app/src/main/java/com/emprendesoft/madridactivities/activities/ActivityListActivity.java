@@ -11,8 +11,20 @@ import com.emprendesoft.madridactivities.fragments.ActivitiesFragment;
 import com.emprendesoft.madridactivities.util.map.model.ActivityPin;
 import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitesInteractor;
+import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesFromCacheInteractor;
+import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesFromCacheInteractorImpl;
 import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesInteractorCompletion;
 import com.emprendesoft.madridshops.domain.activities.interactors.GetAllActivitiesInteractorImp;
+import com.emprendesoft.madridshops.domain.activities.interactors.GetIfAllActivitiesAreCachedInteractor;
+import com.emprendesoft.madridshops.domain.activities.interactors.GetIfAllActivitiesAreCachedInteractorImpl;
+import com.emprendesoft.madridshops.domain.activities.interactors.SaveAllActivitiesIntoCacheInteractor;
+import com.emprendesoft.madridshops.domain.activities.interactors.SaveAllActivitiesIntoCacheInteractorImpl;
+import com.emprendesoft.madridshops.domain.activities.interactors.SetAllActivitesCachedInteractorImpl;
+import com.emprendesoft.madridshops.domain.activities.interactors.SetAllActivitiesCachedInteractor;
+import com.emprendesoft.madridshops.domain.activities.managers.cache.GetAllActivitiesFromCacheManager;
+import com.emprendesoft.madridshops.domain.activities.managers.cache.GetAllActivitiesFromCacheManagerDAOImpl;
+import com.emprendesoft.madridshops.domain.activities.managers.cache.SaveAllActivitiesIntoCacheManager;
+import com.emprendesoft.madridshops.domain.activities.managers.cache.SaveAllActivitiesIntoCacheManagerDAOImpl;
 import com.emprendesoft.madridshops.domain.activities.model.Activities;
 import com.emprendesoft.madridshops.domain.activities.model.Activity;
 import com.emprendesoft.madridshops.domain.activities.network.ANetworkManager;
@@ -36,12 +48,11 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 
 public class ActivityListActivity extends AppCompatActivity {
 
+    public GoogleMap map;
     @BindView(R.id.activity_activity_list__progress_bar)
     ProgressBar mProgressBar;
-
     ActivitiesFragment mActivitiesFragment;
     private SupportMapFragment mapFragment;
-    public GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +62,12 @@ public class ActivityListActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mActivitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__fragment_activities);
-
         initializeMap();
-
-        // TODO: temporal
-        obtainActivityList();
     }
 
     private void initializeMap() {
 
-        mapFragment =(SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__map);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__map);
 
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -70,9 +77,40 @@ public class ActivityListActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Sorry! unable to create maps", Toast.LENGTH_LONG).show();
                 } else {
                     map = googleMap;
-                    // TODO: falta
+                    checkCacheData();
                     setupMap(googleMap);
                 }
+            }
+        });
+    }
+
+    private void checkCacheData() {
+
+        GetIfAllActivitiesAreCachedInteractor getIfAllActivitiesAreCachedInteractor = new GetIfAllActivitiesAreCachedInteractorImpl(this);
+        getIfAllActivitiesAreCachedInteractor.execute(new Runnable() {
+                                                          @Override
+                                                          public void run() {
+                                                              // all cached already, no need to download things, just read from DB
+                                                              readDataFromCache();
+                                                          }
+                                                      }, new Runnable() {
+                                                          @Override
+                                                          public void run() {
+                                                              // nothing cached yet
+                                                              obtainActivityList();
+                                                          }
+                                                      }
+        );
+    }
+
+    private void readDataFromCache() {
+
+        GetAllActivitiesFromCacheManager getAllActivitiesFromCacheManager = new GetAllActivitiesFromCacheManagerDAOImpl(this);
+        GetAllActivitiesFromCacheInteractor getAllActivitiesFromCacheInteractor = new GetAllActivitiesFromCacheInteractorImpl(getAllActivitiesFromCacheManager);
+        getAllActivitiesFromCacheInteractor.execute(new GetAllActivitiesInteractorCompletion() {
+            @Override
+            public void completion(@NonNull Activities activities) {
+                configActivitiesFragment(activities);
             }
         });
     }
@@ -86,8 +124,7 @@ public class ActivityListActivity extends AppCompatActivity {
         map.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    // TODO: temporal
-    private void configActivitiesFragment(Activities activities) {
+    private void configActivitiesFragment(final Activities activities) {
 
         mActivitiesFragment.setActivities(activities);
 
@@ -131,7 +168,16 @@ public class ActivityListActivity extends AppCompatActivity {
                     @Override
                     public void completion(@NonNull Activities activities) {
 
-                        // TODO: temporal
+                        SaveAllActivitiesIntoCacheManager saveManager = new SaveAllActivitiesIntoCacheManagerDAOImpl(getBaseContext());
+                        SaveAllActivitiesIntoCacheInteractor saveInteractor = new SaveAllActivitiesIntoCacheInteractorImpl(saveManager);
+                        saveInteractor.execute(activities, new Runnable() {
+                            @Override
+                            public void run() {
+                                SetAllActivitiesCachedInteractor setAllActivitiesCachedInteractor = new SetAllActivitesCachedInteractorImpl(getBaseContext());
+                                setAllActivitiesCachedInteractor.execute(true);
+                            }
+                        });
+
                         configActivitiesFragment(activities);
                         mProgressBar.setVisibility(View.GONE);
                     }
