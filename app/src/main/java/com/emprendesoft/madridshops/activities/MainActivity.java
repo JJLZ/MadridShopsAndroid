@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 
 import com.emprendesoft.madridshops.R;
+import com.emprendesoft.madridshops.domain.activities.interactors.SetAllActivitesCachedInteractorImpl;
+import com.emprendesoft.madridshops.domain.activities.interactors.SetAllActivitiesCachedInteractor;
 import com.emprendesoft.madridshops.domain.shops.interactors.ClearCacheInteractor;
 import com.emprendesoft.madridshops.domain.shops.interactors.ClearCacheInteractorImp;
 import com.emprendesoft.madridshops.domain.shops.interactors.SetAllShopsAreCachedInteractor;
@@ -136,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 SetAllShopsAreCachedInteractor setAllShopsAreCachedInteractor = new SetAllShopsAreCachedInteractorImpl(getBaseContext());
                 setAllShopsAreCachedInteractor.execute(false);
+
+                SetAllActivitiesCachedInteractor setAllActivitiesCachedInteractor = new SetAllActivitesCachedInteractorImpl(getApplicationContext());
+                setAllActivitiesCachedInteractor.execute(false);
             }
         });
     }
