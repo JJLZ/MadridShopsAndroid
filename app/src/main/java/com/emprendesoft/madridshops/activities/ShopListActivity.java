@@ -1,12 +1,15 @@
 package com.emprendesoft.madridshops.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.emprendesoft.Utils.Utilities;
 import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.domain.shops.interactors.GetAllShopsFromCacheInteractor;
 import com.emprendesoft.madridshops.domain.shops.interactors.GetAllShopsFromCacheInteractorImpl;
@@ -82,11 +85,38 @@ public class ShopListActivity extends AppCompatActivity {
                                                      @Override
                                                      public void run() {
                                                          // nothing cached yet
-                                                         obtainShopList();
+                                                         downloadIfInternetAvailable();
                                                      }
                                                  }
 
         );
+    }
+
+    private void downloadIfInternetAvailable()
+    {
+        if (Utilities.CheckInternetConnection(this))
+        {
+            // download activities info
+            obtainShopList();
+        }
+        else
+        {
+            // Alert user not Internet Available
+            sendAlertInternetNotAvailable();
+        }
+    }
+
+    private void sendAlertInternetNotAvailable() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Conexión no disponible");
+        alertDialog.setMessage("Se requiere conexión a Internet para descargar la información de las tiendas.");
+        alertDialog.setPositiveButton("ENTERADO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+
+        alertDialog.show();
     }
 
     private void readDataFromCache() {

@@ -1,12 +1,15 @@
 package com.emprendesoft.madridactivities.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.emprendesoft.Utils.Utilities;
 import com.emprendesoft.madridactivities.fragments.ActivitiesFragment;
 import com.emprendesoft.madridactivities.util.map.model.ActivityPin;
 import com.emprendesoft.madridshops.R;
@@ -97,10 +100,37 @@ public class ActivityListActivity extends AppCompatActivity {
                                                           @Override
                                                           public void run() {
                                                               // nothing cached yet
-                                                              obtainActivityList();
+                                                              downloadIfInternetAvailable();
                                                           }
                                                       }
         );
+    }
+
+    private void downloadIfInternetAvailable()
+    {
+        if (Utilities.CheckInternetConnection(this))
+        {
+            // download activities info
+            obtainActivityList();
+        }
+        else
+        {
+            // Alert user not Internet Available
+            sendAlertInternetNotAvailable();
+        }
+    }
+
+    private void sendAlertInternetNotAvailable() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Conexión no disponible");
+        alertDialog.setMessage("Se requiere conexión a Internet para descargar la información de actividades.");
+        alertDialog.setPositiveButton("ENTERADO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {}
+        });
+
+        alertDialog.show();
     }
 
     private void readDataFromCache() {
