@@ -3,6 +3,7 @@ package com.emprendesoft.madridshops.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class ShopsFragment extends Fragment {
     private OnElementClick<Shop> listener;
 
     private RecyclerView shopRecyclerView;
+    DividerItemDecoration mDividerItemDecoration;
     private ShopsAdapter adapter;
 
     public ShopsFragment() {
@@ -35,6 +37,9 @@ public class ShopsFragment extends Fragment {
 
         shopRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_shops__recycler_view);
         shopRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mDividerItemDecoration = new DividerItemDecoration(shopRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        shopRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         return view;
     }

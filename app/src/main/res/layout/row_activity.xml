@@ -3,25 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     >
-
-    <TextView
-        android:id="@+id/row_activity__activity_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:textColor="@color/black"
-        tool:text="The super mega evil shop!"
-        style="@style/shop_cell_name_style"
-        />
 
     <ImageView
         android:id="@+id/row_activity__activity_logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_centerVertical="true"
-        tool:src="@android:drawable/btn_star"
+        tool:src="@drawable/activity_placeholder"
+        />
+
+    <TextView
+        android:id="@+id/row_activity__activity_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/row_activity__activity_logo"
+        android:textColor="@color/black"
+        tool:text="Activity Title Name"
+        style="@style/cell_style"
         />
 
 </RelativeLayout>

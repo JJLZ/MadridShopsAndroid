@@ -37,7 +37,7 @@ public class ShopDetailActivity extends AppCompatActivity {
             name.setText(shop.getName());
             address.setText(shop.getAddress());
             description.setText(shop.getDescription());
-            Picasso.with(this).load(shop.getImageUrl()).placeholder(R.drawable.shop_icon_placeholder).into(shopImage);
+            Picasso.with(this).load(shop.getImageUrl()).placeholder(R.drawable.shop_placeholder).into(shopImage);
             String staticMarUrl = StaticMapImage.getMapImageUrl(shop);
             Picasso.with(this).load(staticMarUrl).placeholder(R.drawable.map_placeholder).into(mapImage);
         }

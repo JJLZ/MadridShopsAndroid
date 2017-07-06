@@ -4,6 +4,7 @@ package com.emprendesoft.madridactivities.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ public class ActivitiesFragment extends Fragment {
     private OnElementClick<Activity> mListener;
 
     private RecyclerView activityRecyclerView;
+    DividerItemDecoration mDividerItemDecoration;
     private ActivitiesAdapter mAdapter;
 
     @Override
@@ -31,6 +33,9 @@ public class ActivitiesFragment extends Fragment {
 
         activityRecyclerView = (RecyclerView) root.findViewById(R.id.fragment_activities__recycler_view);
         activityRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mDividerItemDecoration = new DividerItemDecoration(activityRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        activityRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         return root;
     }

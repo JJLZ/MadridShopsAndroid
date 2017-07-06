@@ -22,7 +22,7 @@
                 android:id="@+id/activity_shop_detail__shop_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                tools:src="@drawable/shop_icon_placeholder"
+                tools:src="@drawable/shop_placeholder"
                 />
 
             <TextView

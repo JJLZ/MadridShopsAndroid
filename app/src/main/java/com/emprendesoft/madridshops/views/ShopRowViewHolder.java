@@ -38,7 +38,7 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
         shopNameTextView.setText(shop.getName());
         Picasso.with(context.get()).
                 load(shop.getLogoUrl()).
-                placeholder(R.drawable.shop_icon_placeholder).
+                placeholder(R.drawable.shop_placeholder).
 //                networkPolicy(NetworkPolicy.OFFLINE). // si ya tienes las imágenes no se descargan
                 networkPolicy(NetworkPolicy.NO_CACHE).  // bala las imágenes SIEMPRE
                 into(shopLogoImageView);
