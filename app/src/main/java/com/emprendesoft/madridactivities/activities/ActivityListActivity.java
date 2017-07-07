@@ -41,6 +41,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,7 +50,8 @@ import butterknife.ButterKnife;
 
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 
-public class ActivityListActivity extends AppCompatActivity {
+public class ActivityListActivity extends AppCompatActivity
+{
 
     public GoogleMap map;
     @BindView(R.id.activity_activity_list__progress_bar)
@@ -58,7 +60,8 @@ public class ActivityListActivity extends AppCompatActivity {
     private SupportMapFragment mapFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_list);
 
@@ -68,17 +71,22 @@ public class ActivityListActivity extends AppCompatActivity {
         initializeMap();
     }
 
-    private void initializeMap() {
+    private void initializeMap()
+    {
 
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__map);
 
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
+        mapFragment.getMapAsync(new OnMapReadyCallback()
+        {
             @Override
-            public void onMapReady(GoogleMap googleMap) {
+            public void onMapReady(GoogleMap googleMap)
+            {
 
-                if (googleMap == null) {
+                if (googleMap == null)
+                {
                     Toast.makeText(getApplicationContext(), "Sorry! unable to create maps", Toast.LENGTH_LONG).show();
-                } else {
+                } else
+                {
                     map = googleMap;
                     checkCacheData();
                     setupMap(googleMap);
@@ -87,18 +95,23 @@ public class ActivityListActivity extends AppCompatActivity {
         });
     }
 
-    private void checkCacheData() {
+    private void checkCacheData()
+    {
 
         GetIfAllActivitiesAreCachedInteractor getIfAllActivitiesAreCachedInteractor = new GetIfAllActivitiesAreCachedInteractorImpl(this);
-        getIfAllActivitiesAreCachedInteractor.execute(new Runnable() {
+        getIfAllActivitiesAreCachedInteractor.execute(new Runnable()
+                                                      {
                                                           @Override
-                                                          public void run() {
+                                                          public void run()
+                                                          {
                                                               // all cached already, no need to download things, just read from DB
                                                               readDataFromCache();
                                                           }
-                                                      }, new Runnable() {
+                                                      }, new Runnable()
+                                                      {
                                                           @Override
-                                                          public void run() {
+                                                          public void run()
+                                                          {
                                                               // nothing cached yet
                                                               downloadIfInternetAvailable();
                                                           }
@@ -112,40 +125,47 @@ public class ActivityListActivity extends AppCompatActivity {
         {
             // download activities info
             obtainActivityList();
-        }
-        else
+        } else
         {
             // Alert user not Internet Available
             sendAlertInternetNotAvailable();
         }
     }
 
-    private void sendAlertInternetNotAvailable() {
+    private void sendAlertInternetNotAvailable()
+    {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Conexión no disponible");
         alertDialog.setMessage("Se requiere conexión a Internet para descargar la información de actividades.");
-        alertDialog.setPositiveButton("ENTERADO", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("ENTERADO", new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {}
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+            }
         });
 
         alertDialog.show();
     }
 
-    private void readDataFromCache() {
+    private void readDataFromCache()
+    {
 
         GetAllActivitiesFromCacheManager getAllActivitiesFromCacheManager = new GetAllActivitiesFromCacheManagerDAOImpl(this);
         GetAllActivitiesFromCacheInteractor getAllActivitiesFromCacheInteractor = new GetAllActivitiesFromCacheInteractorImpl(getAllActivitiesFromCacheManager);
-        getAllActivitiesFromCacheInteractor.execute(new GetAllActivitiesInteractorCompletion() {
+        getAllActivitiesFromCacheInteractor.execute(new GetAllActivitiesInteractorCompletion()
+        {
             @Override
-            public void completion(@NonNull Activities activities) {
+            public void completion(@NonNull Activities activities)
+            {
                 configActivitiesFragment(activities);
             }
         });
     }
 
-    private void setupMap(GoogleMap map) {
+    private void setupMap(GoogleMap map)
+    {
 
         MapUtil.centerMapInPosition(map, 40.411335, -3.674908);
         map.setBuildingsEnabled(true);
@@ -154,13 +174,16 @@ public class ActivityListActivity extends AppCompatActivity {
         map.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    private void configActivitiesFragment(final Activities activities) {
+    private void configActivitiesFragment(final Activities activities)
+    {
 
         mActivitiesFragment.setActivities(activities);
 
-        mActivitiesFragment.setOnElementClickListener(new OnElementClick<Activity>() {
+        mActivitiesFragment.setOnElementClickListener(new OnElementClick<Activity>()
+        {
             @Override
-            public void clickedOn(@NonNull Activity element, int position) {
+            public void clickedOn(@NonNull Activity element, int position)
+            {
                 Navigator.navigateFromActivityListActivityToActivityDetailActivity(ActivityListActivity.this, element, position);
             }
         });
@@ -168,16 +191,20 @@ public class ActivityListActivity extends AppCompatActivity {
         putShopPinsOnMap(activities);
     }
 
-    private void putShopPinsOnMap(Activities activities) {
+    private void putShopPinsOnMap(Activities activities)
+    {
 
         List<MapPinnable> activityPins = ActivityPin.activityPinsFromActivities(activities);
         MapUtil.addPins(activityPins, map, this);
 
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+        {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public void onInfoWindowClick(Marker marker)
+            {
 
-                if (marker.getTag() == null || !(marker.getTag() instanceof Activity)) {
+                if (marker.getTag() == null || !(marker.getTag() instanceof Activity))
+                {
                     return;
                 }
 
@@ -187,37 +214,72 @@ public class ActivityListActivity extends AppCompatActivity {
         });
     }
 
-    private void obtainActivityList() {
+    private void obtainActivityList()
+    {
 
         mProgressBar.setVisibility(View.VISIBLE);
 
         ANetworkManager manager = new GetAllActivitiesManagerImpl(this);
         GetAllActivitesInteractor getAllActivitesInteractor = new GetAllActivitiesInteractorImp(manager);
         getAllActivitesInteractor.execute(
-                new GetAllActivitiesInteractorCompletion() {
+                new GetAllActivitiesInteractorCompletion()
+                {
                     @Override
-                    public void completion(@NonNull Activities activities) {
+                    public void completion(@NonNull Activities activities)
+                    {
 
                         SaveAllActivitiesIntoCacheManager saveManager = new SaveAllActivitiesIntoCacheManagerDAOImpl(getBaseContext());
                         SaveAllActivitiesIntoCacheInteractor saveInteractor = new SaveAllActivitiesIntoCacheInteractorImpl(saveManager);
-                        saveInteractor.execute(activities, new Runnable() {
+                        saveInteractor.execute(activities, new Runnable()
+                        {
                             @Override
-                            public void run() {
+                            public void run()
+                            {
                                 SetAllActivitiesCachedInteractor setAllActivitiesCachedInteractor = new SetAllActivitesCachedInteractorImpl(getBaseContext());
                                 setAllActivitiesCachedInteractor.execute(true);
                             }
                         });
 
+                        //-- TODO: cached images --
+//                        configActivitiesFragment(activities);
+//                        mProgressBar.setVisibility(View.GONE);
+
+                        downloadImagesToCache(activities);
                         configActivitiesFragment(activities);
-                        mProgressBar.setVisibility(View.GONE);
+                        //--
                     }
-                }, new InteractorErrorCompletion() {
+                }, new InteractorErrorCompletion()
+                {
                     @Override
-                    public void onError(String errorDescription) {
+                    public void onError(String errorDescription)
+                    {
                         mProgressBar.setVisibility(View.GONE);
                     }
                 }
         );
+    }
+
+    private void downloadImagesToCache(Activities activities)
+    {
+        if (activities != null)
+        {
+            for (Activity activity : activities.allActivities())
+            {
+                String imageURL = activity.getImageUrl();
+                String logoURL = activity.getLogoUrl();
+
+                Picasso.with(this).
+                        load(logoURL).
+                        placeholder(R.drawable.activity_placeholder).fetch();
+
+                Picasso.with(this).
+                        load(imageURL).
+                        placeholder(R.drawable.activity_placeholder).fetch();
+
+            }
+
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 }
 

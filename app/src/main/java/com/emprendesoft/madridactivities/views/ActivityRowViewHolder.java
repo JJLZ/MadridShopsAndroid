@@ -38,7 +38,7 @@ public class ActivityRowViewHolder extends RecyclerView.ViewHolder {
         Picasso.with(mContext.get()).
                 load(activity.getLogoUrl()).
                 placeholder(R.drawable.activity_placeholder).
-                networkPolicy(NetworkPolicy.NO_CACHE).
+                networkPolicy(NetworkPolicy.OFFLINE).
                 into(activityLogoImageView);
     }
 }

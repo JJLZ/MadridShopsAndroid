@@ -2,6 +2,7 @@ package com.emprendesoft;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 
 public class MadridShopsApp extends MultiDexApplication {
@@ -12,10 +13,17 @@ public class MadridShopsApp extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
-        // init app
-//        Log.d(APP_NAME, "App starting");
+        //--now callout --
+        Picasso.Builder builder = new Picasso.Builder(this);
+        builder.downloader(new OkHttpDownloader(this, Integer.MAX_VALUE));
+        Picasso built = builder.build();
+//        built.setIndicatorsEnabled(true);
+//        built.setLoggingEnabled(true);
+        Picasso.setSingletonInstance(built);
+
 //        Picasso.with(getApplicationContext()).setLoggingEnabled(true);
-        Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);
+//        Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);
+        //--
 
 
         //--now Service Test 1 --

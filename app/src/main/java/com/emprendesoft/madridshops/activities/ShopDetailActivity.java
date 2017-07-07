@@ -10,6 +10,7 @@ import com.emprendesoft.madridshops.R;
 import com.emprendesoft.madridshops.domain.shops.model.Shop;
 import com.emprendesoft.madridshops.util.Constants;
 import com.emprendesoft.madridshops.util.StaticMapImage;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -37,9 +38,9 @@ public class ShopDetailActivity extends AppCompatActivity {
             name.setText(shop.getName());
             address.setText(shop.getAddress());
             description.setText(shop.getDescription());
-            Picasso.with(this).load(shop.getImageUrl()).placeholder(R.drawable.shop_placeholder).into(shopImage);
+            Picasso.with(this).load(shop.getImageUrl()).placeholder(R.drawable.shop_placeholder).networkPolicy(NetworkPolicy.OFFLINE).into(shopImage);
             String staticMarUrl = StaticMapImage.getMapImageUrl(shop);
-            Picasso.with(this).load(staticMarUrl).placeholder(R.drawable.map_placeholder).into(mapImage);
+            Picasso.with(this).load(staticMarUrl).placeholder(R.drawable.map_placeholder).networkPolicy(NetworkPolicy.OFFLINE).into(mapImage);
         }
     }
 }

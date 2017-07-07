@@ -22,7 +22,6 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
     public ShopRowViewHolder(View rowShop) {
         super(rowShop);
 
-//        this.context = new WeakReference<Context>(rowShop.getContext());
         this.context = new WeakReference<>(rowShop.getContext());
 
         shopNameTextView = (TextView) rowShop.findViewById(R.id.row_shop__shop_name);
@@ -39,8 +38,7 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
         Picasso.with(context.get()).
                 load(shop.getLogoUrl()).
                 placeholder(R.drawable.shop_placeholder).
-//                networkPolicy(NetworkPolicy.OFFLINE). // si ya tienes las imágenes no se descargan
-                networkPolicy(NetworkPolicy.NO_CACHE).  // bala las imágenes SIEMPRE
+                networkPolicy(NetworkPolicy.OFFLINE).
                 into(shopLogoImageView);
     }
 }

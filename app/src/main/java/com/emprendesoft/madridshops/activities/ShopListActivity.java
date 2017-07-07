@@ -41,6 +41,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -153,8 +154,12 @@ public class ShopListActivity extends AppCompatActivity {
                             }
                         });
 
+                        //-- TODO: cached images --
+//                        configShopsFragment(shops);
+                        downloadImagesToCache(shops);
                         configShopsFragment(shops);
-                        mProgressBar.setVisibility(View.GONE);
+//                        mProgressBar.setVisibility(View.GONE);
+                        //--
                     }
                 },
                 new InteractorErrorCompletion() {
@@ -165,6 +170,29 @@ public class ShopListActivity extends AppCompatActivity {
                 }
         );
 
+    }
+
+    private void downloadImagesToCache(Shops shops)
+    {
+        if (shops != null)
+        {
+            for (Shop shop : shops.allShops())
+            {
+                String imageURL = shop.getImageUrl();
+                String logoURL = shop.getLogoUrl();
+
+                Picasso.with(this).
+                        load(logoURL).
+                        placeholder(R.drawable.shop_placeholder).fetch();
+
+                Picasso.with(this).
+                        load(imageURL).
+                        placeholder(R.drawable.shop_placeholder).fetch();
+
+            }
+
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
     private void configShopsFragment(Shops shops) {
