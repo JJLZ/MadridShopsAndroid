@@ -8,21 +8,14 @@
 
     <ImageView
         android:id="@+id/row_activity__activity_logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerVertical="true"
         tool:src="@drawable/activity_placeholder"
-        />
+        style="@style/cell_imageview_style"/>
 
     <TextView
         android:id="@+id/row_activity__activity_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/row_activity__activity_logo"
-        android:textColor="@color/black"
         tool:text="Activity Title Name"
-        style="@style/cell_style"
+        style="@style/cell_textview_style"
         />
 
 </RelativeLayout>

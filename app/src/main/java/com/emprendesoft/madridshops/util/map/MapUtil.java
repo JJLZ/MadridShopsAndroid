@@ -66,42 +66,14 @@ public class MapUtil
                 final ImageView imageView = (ImageView) view.findViewById(R.id.callout_layout__logo);
                 final String url = marker.getSnippet();
 
-                //-- TODO: cached images --
-                Picasso.with(context).load(url).placeholder(R.drawable.shop_placeholder).networkPolicy(NetworkPolicy.OFFLINE).into(imageView);
-                //--
+                Picasso.with(context)
+                        .load(url)
+                        .placeholder(R.drawable.shop_placeholder)
+                        .networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(imageView, new MarkerCallback(marker, url, imageView, context));
 
                 return view;
             }
         });
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
