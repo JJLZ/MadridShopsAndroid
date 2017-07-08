@@ -3,11 +3,15 @@ package com.emprendesoft.madridactivities.activities;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.emprendesoft.Utils.Utilities;
@@ -51,7 +55,7 @@ import butterknife.ButterKnife;
 
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 
-public class ActivityListActivity extends AppCompatActivity
+public class ActivityListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener
 {
     @BindView(R.id.activity_activity_list__progress_bar)
     ProgressBar mProgressBar;
@@ -61,6 +65,7 @@ public class ActivityListActivity extends AppCompatActivity
     ActivitiesFragment mActivitiesFragment;
     private SupportMapFragment mapFragment;
     public GoogleMap map;
+    private Activities allActivities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -102,7 +107,6 @@ public class ActivityListActivity extends AppCompatActivity
 
     private void checkCacheData()
     {
-
         GetIfAllActivitiesAreCachedInteractor getIfAllActivitiesAreCachedInteractor = new GetIfAllActivitiesAreCachedInteractorImpl(this);
         getIfAllActivitiesAreCachedInteractor.execute(new Runnable()
                                                       {
@@ -139,7 +143,6 @@ public class ActivityListActivity extends AppCompatActivity
 
     private void sendAlertInternetNotAvailable()
     {
-
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Conexión no disponible");
         alertDialog.setMessage("Se requiere conexión a Internet para descargar la información de actividades.");
@@ -156,7 +159,6 @@ public class ActivityListActivity extends AppCompatActivity
 
     private void readDataFromCache()
     {
-
         GetAllActivitiesFromCacheManager getAllActivitiesFromCacheManager = new GetAllActivitiesFromCacheManagerDAOImpl(this);
         GetAllActivitiesFromCacheInteractor getAllActivitiesFromCacheInteractor = new GetAllActivitiesFromCacheInteractorImpl(getAllActivitiesFromCacheManager);
         getAllActivitiesFromCacheInteractor.execute(new GetAllActivitiesInteractorCompletion()
@@ -164,15 +166,15 @@ public class ActivityListActivity extends AppCompatActivity
             @Override
             public void completion(@NonNull Activities activities)
             {
-                configActivitiesFragment(activities);
+                allActivities = activities; // save a copy for filter
+                configActivitiesFragment(activities); // load activities in fragment activity list
             }
         });
     }
 
     private void setupMap(GoogleMap map)
     {
-
-        MapUtil.centerMapInPosition(map, 40.411335, -3.674908);
+        MapUtil.centerMapInPosition(map, 40.411335, -3.674908, (float) 12.0);
         map.setBuildingsEnabled(true);
         map.setMapType(MAP_TYPE_NORMAL);
         map.getUiSettings().setRotateGesturesEnabled(false);
@@ -232,6 +234,7 @@ public class ActivityListActivity extends AppCompatActivity
                     @Override
                     public void completion(@NonNull Activities activities)
                     {
+                        allActivities = activities; // save a copy for filter
 
                         SaveAllActivitiesIntoCacheManager saveManager = new SaveAllActivitiesIntoCacheManagerDAOImpl(getBaseContext());
                         SaveAllActivitiesIntoCacheInteractor saveInteractor = new SaveAllActivitiesIntoCacheInteractorImpl(saveManager);
@@ -285,6 +288,48 @@ public class ActivityListActivity extends AppCompatActivity
 
             mProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_items, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s)
+    {
+        s = s.toLowerCase();
+
+        Activities activities = new Activities();
+        for (Activity activity : allActivities.allActivities())
+        {
+            String name = activity.getName().toLowerCase();
+
+            if (name.contains(s))
+            {
+                activities.add(activity);
+            }
+        }
+
+        configActivitiesFragment(activities); // load only filtered activities into fragment activity list
+
+        map.clear();
+        putShopPinsOnMap(activities);
+
+        return true;
     }
 }
 

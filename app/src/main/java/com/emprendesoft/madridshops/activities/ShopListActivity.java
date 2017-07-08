@@ -3,10 +3,13 @@ package com.emprendesoft.madridshops.activities;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -52,8 +55,9 @@ import butterknife.ButterKnife;
 
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 
-public class ShopListActivity extends AppCompatActivity {
-
+public class ShopListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener
+{
+    public GoogleMap map;
     @BindView(R.id.activity_shop_list__progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.toolbar)
@@ -61,11 +65,11 @@ public class ShopListActivity extends AppCompatActivity {
 
     ShopsFragment shopsFragment;
     private SupportMapFragment mapFragment;
-    public GoogleMap map;
-
+    private Shops allShops;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop_list);
 
@@ -79,23 +83,26 @@ public class ShopListActivity extends AppCompatActivity {
         initializeMap();
     }
 
-    private void checkCacheData() {
-
+    private void checkCacheData()
+    {
         GetIfAllShopsAreCachedInteractor getIfAllShopsAreCachedInteractor = new GetIfAllShopsAreCachedInteractorImpl(this);
-        getIfAllShopsAreCachedInteractor.execute(new Runnable() {
+        getIfAllShopsAreCachedInteractor.execute(new Runnable()
+                                                 {
                                                      @Override
-                                                     public void run() {
+                                                     public void run()
+                                                     {
                                                          // all cached already, no need to download things, just read from DB
                                                          readDataFromCache();
                                                      }
-                                                 }, new Runnable() {
+                                                 }, new Runnable()
+                                                 {
                                                      @Override
-                                                     public void run() {
+                                                     public void run()
+                                                     {
                                                          // nothing cached yet
                                                          downloadIfInternetAvailable();
                                                      }
                                                  }
-
         );
     }
 
@@ -105,55 +112,67 @@ public class ShopListActivity extends AppCompatActivity {
         {
             // download activities info
             obtainShopList();
-        }
-        else
+        } else
         {
             // Alert user not Internet Available
             sendAlertInternetNotAvailable();
         }
     }
 
-    private void sendAlertInternetNotAvailable() {
-
+    private void sendAlertInternetNotAvailable()
+    {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Conexión no disponible");
         alertDialog.setMessage("Se requiere conexión a Internet para descargar la información de las tiendas.");
-        alertDialog.setPositiveButton("ENTERADO", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("ENTERADO", new DialogInterface.OnClickListener()
+        {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {}
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+            }
         });
 
         alertDialog.show();
     }
 
-    private void readDataFromCache() {
-
+    private void readDataFromCache()
+    {
         GetAllShopsFromCacheManager getAllShopsFromCacheManager = new GetAllShopsFromCacheManagerDAOImp(this);
         GetAllShopsFromCacheInteractor getAllShopsFromCacheInteractor = new GetAllShopsFromCacheInteractorImpl(getAllShopsFromCacheManager);
-        getAllShopsFromCacheInteractor.execute(new GetAllShopsInteractorCompletion() {
+        getAllShopsFromCacheInteractor.execute(new GetAllShopsInteractorCompletion()
+        {
             @Override
-            public void completion(@NonNull Shops shops) {
-                configShopsFragment(shops);
+            public void completion(@NonNull Shops shops)
+            {
+
+                allShops = shops;   // save a copy for filter
+                configShopsFragment(shops); // load shops in fragment shop list
             }
         });
     }
 
-    private void obtainShopList() {
-
+    private void obtainShopList()
+    {
         mProgressBar.setVisibility(View.VISIBLE);
 
         NetworkManager manager = new GetAllShopsManagerImpl(this);
         GetAllShopsInteractor getAllShopsInteractor = new GetAllShopsInteractorImp(manager);
         getAllShopsInteractor.execute(
-                new GetAllShopsInteractorCompletion() {
+                new GetAllShopsInteractorCompletion()
+                {
                     @Override
-                    public void completion(Shops shops) {
+                    public void completion(Shops shops)
+                    {
+
+                        allShops = shops; // save a copy for filter
 
                         SaveAllShopsIntoCacheManager saveManager = new SaveAllShopsIntoCacheManagerDAOImp(getBaseContext());
                         SaveAllShopsIntoCacheInteractor saveInteractor = new SaveAllShopsIntoCacheInteractorImp(saveManager);
-                        saveInteractor.execute(shops, new Runnable() {
+                        saveInteractor.execute(shops, new Runnable()
+                        {
                             @Override
-                            public void run() {
+                            public void run()
+                            {
 
                                 SetAllShopsAreCachedInteractor setAllShopsAreCachedInteractor = new SetAllShopsAreCachedInteractorImpl(getBaseContext());
                                 setAllShopsAreCachedInteractor.execute(true);
@@ -168,14 +187,15 @@ public class ShopListActivity extends AppCompatActivity {
                         //--
                     }
                 },
-                new InteractorErrorCompletion() {
+                new InteractorErrorCompletion()
+                {
                     @Override
-                    public void onError(String errorDescription) {
+                    public void onError(String errorDescription)
+                    {
                         mProgressBar.setVisibility(View.GONE);
                     }
                 }
         );
-
     }
 
     private void downloadImagesToCache(Shops shops)
@@ -201,12 +221,15 @@ public class ShopListActivity extends AppCompatActivity {
         }
     }
 
-    private void configShopsFragment(Shops shops) {
+    private void configShopsFragment(Shops shops)
+    {
         shopsFragment.setShops(shops);
 
-        shopsFragment.setOnElementClickListener(new OnElementClick<Shop>() {
+        shopsFragment.setOnElementClickListener(new OnElementClick<Shop>()
+        {
             @Override
-            public void clickedOn(@NonNull Shop element, int position) {
+            public void clickedOn(@NonNull Shop element, int position)
+            {
 
                 Navigator.navigateFromShopListActivityToShopDetailActivity(ShopListActivity.this, element, position);
             }
@@ -215,19 +238,22 @@ public class ShopListActivity extends AppCompatActivity {
         putShopPinsOnMap(shops);
     }
 
-
-    private void initializeMap() {
-
+    private void initializeMap()
+    {
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_shop_list__map);
 
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
+        mapFragment.getMapAsync(new OnMapReadyCallback()
+        {
 
             @Override
-            public void onMapReady(GoogleMap googleMap) {
+            public void onMapReady(GoogleMap googleMap)
+            {
 
-                if (googleMap == null) {
+                if (googleMap == null)
+                {
                     Toast.makeText(getApplicationContext(), "Sorry! unable to create maps", Toast.LENGTH_SHORT).show();
-                } else {
+                } else
+                {
                     map = googleMap;
                     checkCacheData();
                     setupMap(googleMap);
@@ -236,25 +262,28 @@ public class ShopListActivity extends AppCompatActivity {
         });
     }
 
-    private void setupMap(GoogleMap map) {
-
-        MapUtil.centerMapInPosition(map, 40.411335, -3.674908);
+    private void setupMap(GoogleMap map)
+    {
+        MapUtil.centerMapInPosition(map, 40.411335, -3.674908, (float) 12.0);
         map.setBuildingsEnabled(true);
         map.setMapType(MAP_TYPE_NORMAL);
         map.getUiSettings().setRotateGesturesEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
     }
 
-    private void putShopPinsOnMap(Shops shops) {
-
+    private void putShopPinsOnMap(Shops shops)
+    {
         List<MapPinnable> shopPins = ShopPin.shopPinsFromShops(shops);
         MapUtil.addPins(shopPins, map, this);
 
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+        {
             @Override
-            public void onInfoWindowClick(Marker marker) {
+            public void onInfoWindowClick(Marker marker)
+            {
 
-                if (marker.getTag() == null || !(marker.getTag() instanceof Shop)) {
+                if (marker.getTag() == null || !(marker.getTag() instanceof Shop))
+                {
                     return;
                 }
 
@@ -268,6 +297,41 @@ public class ShopListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.menu_items, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s)
+    {
+        s = s.toLowerCase();
+
+        Shops shops = new Shops();
+        for (Shop shop : allShops.allShops())
+        {
+            String name = shop.getName().toLowerCase();
+
+            if (name.contains(s))
+            {
+                shops.add(shop);
+            }
+        }
+
+        configShopsFragment(shops); // load only filtered shops in fragment shop list
+
+        map.clear();
+        putShopPinsOnMap(shops);
+
         return true;
     }
 }
