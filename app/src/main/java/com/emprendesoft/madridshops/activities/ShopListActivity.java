@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -261,6 +262,13 @@ public class ShopListActivity extends AppCompatActivity {
                 Navigator.navigateFromShopListActivityToShopDetailActivity(ShopListActivity.this, shop, 0);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_items, menu);
+        return true;
     }
 }
 
