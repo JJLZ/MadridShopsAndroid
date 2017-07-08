@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -52,12 +53,14 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 
 public class ActivityListActivity extends AppCompatActivity
 {
-
-    public GoogleMap map;
     @BindView(R.id.activity_activity_list__progress_bar)
     ProgressBar mProgressBar;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     ActivitiesFragment mActivitiesFragment;
     private SupportMapFragment mapFragment;
+    public GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,6 +69,8 @@ public class ActivityListActivity extends AppCompatActivity
         setContentView(R.layout.activity_activity_list);
 
         ButterKnife.bind(this);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mActivitiesFragment = (ActivitiesFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__fragment_activities);
         initializeMap();

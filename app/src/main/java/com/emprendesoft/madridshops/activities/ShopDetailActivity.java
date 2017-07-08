@@ -3,6 +3,7 @@ package com.emprendesoft.madridshops.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class ShopDetailActivity extends AppCompatActivity {
     @BindView(R.id.activity_shop_detail__shop_image) ImageView shopImage;
     @BindView(R.id.activity_shop_detail__shop_map) ImageView mapImage;
     @BindView(R.id.activity_shop_detail__shop_name) TextView name;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,9 @@ public class ShopDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop_detail);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         if (intent != null) {

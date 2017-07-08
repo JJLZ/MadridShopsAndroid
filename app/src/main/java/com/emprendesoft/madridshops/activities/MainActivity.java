@@ -2,6 +2,7 @@ package com.emprendesoft.madridshops.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     Button shopsButton;
     @BindView(R.id.activity_main__activities_button)
     Button activitiesButton;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
 
         shopsButton.setOnClickListener(new View.OnClickListener() {
             @Override

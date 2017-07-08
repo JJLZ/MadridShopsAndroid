@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -54,7 +55,8 @@ public class ShopListActivity extends AppCompatActivity {
 
     @BindView(R.id.activity_shop_list__progress_bar)
     ProgressBar mProgressBar;
-
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     ShopsFragment shopsFragment;
     private SupportMapFragment mapFragment;
@@ -67,6 +69,9 @@ public class ShopListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shop_list);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         shopsFragment = (ShopsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_shop_list__fragment_shops);
 

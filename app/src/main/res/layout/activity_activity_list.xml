@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.percent.PercentRelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.emprendesoft.madridactivities.activities.ActivityListActivity"
-    >
+    android:orientation="vertical"
+    tools:context="com.emprendesoft.madridactivities.activities.ActivityListActivity">
+
+    <include layout="@layout/toolbar_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10"
+        >
 
     <fragment
         android:id="@+id/activity_activity_list__map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        app:layout_heightPercent="50%"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
         />
 
     <fragment
         android:id="@+id/activity_activity_list__fragment_activities"
         android:name="com.emprendesoft.madridactivities.fragments.ActivitiesFragment"
         android:layout_width="match_parent"
-        app:layout_heightPercent="50%"
+        android:layout_height="match_parent"
         android:layout_below="@id/activity_activity_list__map"
-        tools:layout="@layout/fragment_activities"
+        android:layout_weight="5"
         />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/activity_activity_list__progress_bar"
@@ -32,4 +43,4 @@
         android:visibility="invisible"
         />
 
-</android.support.percent.PercentRelativeLayout>
+</LinearLayout>
