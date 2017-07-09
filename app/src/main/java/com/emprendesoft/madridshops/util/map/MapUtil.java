@@ -20,10 +20,10 @@ import java.util.List;
 
 public class MapUtil
 {
-    public static void centerMapInPosition(GoogleMap googleMap, double latitude, double longitude)
+    public static void centerMapInPosition(GoogleMap googleMap, double latitude, double longitude, float zoom)
     {
         CameraPosition cameraPosition = new CameraPosition.Builder().target(
-                new LatLng(latitude, longitude)).zoom(12).build();
+                new LatLng(latitude, longitude)).zoom(zoom).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
@@ -71,6 +71,11 @@ public class MapUtil
                         .placeholder(R.drawable.shop_placeholder)
                         .networkPolicy(NetworkPolicy.OFFLINE)
                         .into(imageView, new MarkerCallback(marker, url, imageView, context));
+
+                //-- Center in map --
+                float zoom = googleMap.getCameraPosition().zoom;
+                centerMapInPosition(googleMap, marker.getPosition().latitude, marker.getPosition().longitude, zoom);
+                //--
 
                 return view;
             }

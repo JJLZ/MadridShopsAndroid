@@ -2,21 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/callout_layout__title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:layout_gravity="center"
-        />
+              android:layout_height="wrap_content"
+              android:background="@color/gradient_start_color_button"
+    >
 
     <ImageView
         android:id="@+id/callout_layout__logo"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/callout_layout__title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
         android:layout_gravity="center"
         />
 
