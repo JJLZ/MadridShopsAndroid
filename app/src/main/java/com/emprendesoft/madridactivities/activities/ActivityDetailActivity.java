@@ -42,8 +42,14 @@ public class ActivityDetailActivity extends AppCompatActivity {
 
             name.setText(activity.getName());
             address.setText(activity.getAddress());
-            description.setText(activity.getDescription());
-            Picasso.with(this).load(activity.getImageUrl()).placeholder(R.drawable.activity_placeholder).networkPolicy(NetworkPolicy.OFFLINE).into(activityImage);
+            description.setText(activity.getDescription().trim());
+
+            Picasso.with(this)
+                    .load(activity.getImageUrl())
+                    .placeholder(R.drawable.activity_placeholder)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(activityImage);
+
             String staticMarUrl = StaticMapImage.getMapImageUrlFromActivity(activity);
             Picasso.with(this).load(staticMarUrl).placeholder(R.drawable.map_placeholder).networkPolicy(NetworkPolicy.OFFLINE).into(mapImage);
         }

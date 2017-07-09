@@ -9,10 +9,15 @@
 
     <include layout="@layout/toolbar_layout"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_below="@+id/toolbar"
         android:weightSum="10"
         >
 
@@ -41,5 +46,7 @@
         android:layout_centerInParent="true"
         android:visibility="invisible"
         />
+
+    </RelativeLayout>
 
 </LinearLayout>

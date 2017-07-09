@@ -53,7 +53,7 @@ public class ShopDAO implements DAOReadable<Shop>, DAOWritable<Shop> {
             String name = c.getString(c.getColumnIndex(KEY_SHOP_NAME));
             String address = c.getString(c.getColumnIndex(KEY_SHOP_ADDRESS));
             String description = c.getString(c.getColumnIndex(KEY_SHOP_DESCRIPTION));
-            String imageUrl = c.getString(c.getColumnIndex(KEY_SHOP_URL));
+            String imageUrl = c.getString(c.getColumnIndex(KEY_SHOP_IMAGE_URL));
             String logoImageUrl = c.getString(c.getColumnIndex(KEY_SHOP_LOGO_IMAGE_URL));
             String url = c.getString(c.getColumnIndex(KEY_SHOP_URL));
             float latitude = c.getFloat(c.getColumnIndex(KEY_SHOP_LATITUDE));

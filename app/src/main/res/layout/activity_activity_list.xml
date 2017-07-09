@@ -9,38 +9,46 @@
 
     <include layout="@layout/toolbar_layout"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="10"
         >
 
-    <fragment
-        android:id="@+id/activity_activity_list__map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:orientation="vertical"
+            android:weightSum="10"
+            >
 
-    <fragment
-        android:id="@+id/activity_activity_list__fragment_activities"
-        android:name="com.emprendesoft.madridactivities.fragments.ActivitiesFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/activity_activity_list__map"
-        android:layout_weight="5"
-        />
+            <fragment
+                android:id="@+id/activity_activity_list__map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                />
 
-    </LinearLayout>
+            <fragment
+                android:id="@+id/activity_activity_list__fragment_activities"
+                android:name="com.emprendesoft.madridactivities.fragments.ActivitiesFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/activity_activity_list__map"
+                android:layout_weight="5"
+                />
 
-    <ProgressBar
-        android:id="@+id/activity_activity_list__progress_bar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/activity_activity_list__progress_bar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            />
+
+    </RelativeLayout>
 
 </LinearLayout>

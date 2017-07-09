@@ -28,12 +28,13 @@
                 android:id="@+id/activity_detail_activity__activity_name"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:alpha="0.8"
-                android:background="@color/colorPrimaryDark"
+                android:alpha="0.5"
+                android:background="@color/gradient_start_color_button"
                 android:gravity="center_horizontal|bottom"
                 android:textColor="@android:color/white"
-                android:textSize="40sp"
-                tools:text="El Corte Chino (sin premio)"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                tools:text="El Corte Chino"
                 />
 
             <TextView
@@ -41,6 +42,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/activity_detail_activity__activity_name"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:textStyle="bold|italic"
                 tools:text="Address"
                 />
 
@@ -49,6 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/activity_detail_activity__activity_address"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 tools:text="Description"
                 />
 

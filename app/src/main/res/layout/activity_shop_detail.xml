@@ -2,9 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.emprendesoft.madridshops.activities.ShopDetailActivity">
 
     <include layout="@layout/toolbar_layout"/>
@@ -30,12 +30,13 @@
                 android:id="@+id/activity_shop_detail__shop_name"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:alpha="0.8"
-                android:background="@color/colorPrimaryDark"
+                android:alpha="0.5"
+                android:background="@color/gradient_start_color_button"
                 android:gravity="center_horizontal|bottom"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:textSize="40sp"
-                tools:text="El Corte Chino (sin premio)"
+                android:textSize="20sp"
+                tools:text="El Corte Chino"
                 />
 
             <TextView
@@ -43,6 +44,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/activity_shop_detail__shop_name"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:textStyle="bold|italic"
                 tools:text="Address"
                 />
 
@@ -51,6 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/activity_shop_detail__shop_address"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 tools:text="Description"
                 />
 

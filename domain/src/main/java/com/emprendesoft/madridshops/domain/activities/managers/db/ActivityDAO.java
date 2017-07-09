@@ -86,7 +86,7 @@ public class ActivityDAO implements DAOReadable<Activity>, DAOWritable<Activity>
             String name = c.getString(c.getColumnIndex(KEY_ACTIVITY_NAME));
             String address = c.getString(c.getColumnIndex(KEY_ACTIVITY_ADDRESS));
             String description = c.getString(c.getColumnIndex(KEY_ACTIVITY_DESCRIPTION));
-            String imageUrl = c.getString(c.getColumnIndex(KEY_ACTIVITY_URL));
+            String imageUrl = c.getString(c.getColumnIndex(KEY_ACTIVITY_IMAGE_URL));
             String logoImageUrl = c.getString(c.getColumnIndex(KEY_ACTIVITY_LOGO_IMAGE_URL));
             String url = c.getString(c.getColumnIndex(KEY_ACTIVITY_URL));
             float latitude = c.getFloat(c.getColumnIndex(KEY_ACTIVITY_LATITUDE));

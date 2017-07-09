@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +31,7 @@ public class ShopsFragment extends Fragment
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_shops, container, false);
 
@@ -50,7 +48,6 @@ public class ShopsFragment extends Fragment
 
     public void setShops(Shops shops)
     {
-
         adapter = new ShopsAdapter(shops, getActivity());
         shopRecyclerView.setAdapter(adapter);
 
@@ -59,11 +56,8 @@ public class ShopsFragment extends Fragment
             @Override
             public void clickedOn(@NonNull Shop shop, int position)
             {
-                Log.d("Click", shop.getName());
-
                 if (listener != null)
                 {
-//                    listener.clickedOn(shop, position);
                     ShopsFragment.this.listener.clickedOn(shop, position);
                 }
             }
