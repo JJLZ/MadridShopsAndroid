@@ -179,12 +179,8 @@ public class ShopListActivity extends AppCompatActivity implements SearchView.On
                             }
                         });
 
-                        //-- TODO: cached images --
-//                        configShopsFragment(shops);
                         downloadImagesToCache(shops);
                         configShopsFragment(shops);
-//                        mProgressBar.setVisibility(View.GONE);
-                        //--
                     }
                 },
                 new InteractorErrorCompletion()

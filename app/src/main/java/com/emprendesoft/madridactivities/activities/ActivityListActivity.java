@@ -248,13 +248,8 @@ public class ActivityListActivity extends AppCompatActivity implements SearchVie
                             }
                         });
 
-                        //-- TODO: cached images --
-//                        configActivitiesFragment(activities);
-//                        mProgressBar.setVisibility(View.GONE);
-
                         downloadImagesToCache(activities);
                         configActivitiesFragment(activities);
-                        //--
                     }
                 }, new InteractorErrorCompletion()
                 {

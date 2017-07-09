@@ -12,7 +12,8 @@ public class Shop implements Serializable {
     private String logoUrl;
     private String address;
     private String url;
-    private String description;
+    private String descriptionES;
+    private String descriptionEN;
     private float latitude;
     private float longitude;
 
@@ -82,12 +83,23 @@ public class Shop implements Serializable {
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionES() {
+        return descriptionES;
     }
 
-    public Shop setDescription(String description) {
-        this.description = description;
+    public Shop setDescriptionES(String descriptionES) {
+        this.descriptionES = descriptionES;
+        return this;
+    }
+
+    public String getDescriptionEN()
+    {
+        return descriptionEN;
+    }
+
+    public Shop setDescriptionEN(String descriptionEN)
+    {
+        this.descriptionEN = descriptionEN;
         return this;
     }
 

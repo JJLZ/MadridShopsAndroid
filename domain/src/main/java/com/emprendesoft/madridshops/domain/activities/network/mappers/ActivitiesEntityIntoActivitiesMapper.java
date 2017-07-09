@@ -18,7 +18,8 @@ public class ActivitiesEntityIntoActivitiesMapper {
 
             Activity activity = Activity.of(activityEntity.getId(), activityEntity.getName());
 
-            activity.setDescription(activityEntity.getDescription_es());
+            activity.setDescriptionES(activityEntity.getDescription_es());
+            activity.setDescriptionEN(activityEntity.getDescription_en());
             activity.setLatitude(getCorrectCoordinateComponent(activityEntity.getGps_lat()));
             activity.setLongitude(getCorrectCoordinateComponent(activityEntity.getGps_lon()));
             activity.setAddress(activityEntity.getAddress());

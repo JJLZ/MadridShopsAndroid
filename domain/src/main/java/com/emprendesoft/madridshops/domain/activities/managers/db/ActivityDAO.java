@@ -15,9 +15,10 @@ import com.emprendesoft.madridshops.domain.shops.managers.db.DBHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.ALL_COLUMNS;
+import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.ALL_COLUMNS_ACTIVITY;
 import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.KEY_ACTIVITY_ADDRESS;
-import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.KEY_ACTIVITY_DESCRIPTION;
+import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.KEY_ACTIVITY_DESCRIPTION_EN;
+import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.KEY_ACTIVITY_DESCRIPTION_ES;
 import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.KEY_ACTIVITY_ID;
 import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.KEY_ACTIVITY_IMAGE_URL;
 import static com.emprendesoft.madridshops.domain.shops.managers.db.DBConstants.KEY_ACTIVITY_LATITUDE;
@@ -66,7 +67,7 @@ public class ActivityDAO implements DAOReadable<Activity>, DAOWritable<Activity>
     public @Nullable List<Activity> query(String where, String[] whereArgs, String orderBy) {
 
         Cursor c = dbReadConnection.query(TABLE_ACTIVITY,
-                ALL_COLUMNS,    // columns I want to obtain
+                ALL_COLUMNS_ACTIVITY,    // columns I want to obtain
                 where,          // where
                 whereArgs,      // where args
                 orderBy,        // order by
@@ -85,7 +86,8 @@ public class ActivityDAO implements DAOReadable<Activity>, DAOWritable<Activity>
             long id = c.getLong(c.getColumnIndex(KEY_ACTIVITY_ID));
             String name = c.getString(c.getColumnIndex(KEY_ACTIVITY_NAME));
             String address = c.getString(c.getColumnIndex(KEY_ACTIVITY_ADDRESS));
-            String description = c.getString(c.getColumnIndex(KEY_ACTIVITY_DESCRIPTION));
+            String descriptionES = c.getString(c.getColumnIndex(KEY_ACTIVITY_DESCRIPTION_ES));
+            String descriptionEN = c.getString(c.getColumnIndex(KEY_ACTIVITY_DESCRIPTION_EN));
             String imageUrl = c.getString(c.getColumnIndex(KEY_ACTIVITY_IMAGE_URL));
             String logoImageUrl = c.getString(c.getColumnIndex(KEY_ACTIVITY_LOGO_IMAGE_URL));
             String url = c.getString(c.getColumnIndex(KEY_ACTIVITY_URL));
@@ -94,7 +96,8 @@ public class ActivityDAO implements DAOReadable<Activity>, DAOWritable<Activity>
 
             Activity activity = Activity.of(id, name)
                     .setAddress(address)
-                    .setDescription(description)
+                    .setDescriptionES(descriptionES)
+                    .setDescriptionEN(descriptionEN)
                     .setImageUrl(imageUrl)
                     .setLogoUrl(logoImageUrl)
                     .setUrl(url)
@@ -138,7 +141,8 @@ public class ActivityDAO implements DAOReadable<Activity>, DAOWritable<Activity>
 
         contentValues.put(KEY_ACTIVITY_NAME, activity.getName());
         contentValues.put(KEY_ACTIVITY_ADDRESS, activity.getAddress());
-        contentValues.put(KEY_ACTIVITY_DESCRIPTION, activity.getDescription());
+        contentValues.put(KEY_ACTIVITY_DESCRIPTION_ES, activity.getDescriptionES());
+        contentValues.put(KEY_ACTIVITY_DESCRIPTION_EN, activity.getDescriptionEN());
         contentValues.put(KEY_ACTIVITY_IMAGE_URL, activity.getImageUrl());
         contentValues.put(KEY_ACTIVITY_LOGO_IMAGE_URL, activity.getLogoUrl());
         contentValues.put(KEY_ACTIVITY_URL, activity.getUrl());

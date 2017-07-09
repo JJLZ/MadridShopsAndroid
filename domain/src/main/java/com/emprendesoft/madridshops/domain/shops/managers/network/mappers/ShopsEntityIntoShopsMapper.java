@@ -17,7 +17,8 @@ public class ShopsEntityIntoShopsMapper {
         for (ShopEntity shopEntity : shopEntities) {
             Shop shop = Shop.of(shopEntity.getId(), shopEntity.getName());
 
-            shop.setDescription(shopEntity.getDescription_es());
+            shop.setDescriptionES(shopEntity.getDescription_es());
+            shop.setDescriptionEN(shopEntity.getDescription_en());
             shop.setLatitude(getCorrectCoordinateComponent(shopEntity.getGps_lat()));
             shop.setLongitude(getCorrectCoordinateComponent(shopEntity.getGps_lon()));
             shop.setAddress(shopEntity.getAddress());

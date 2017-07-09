@@ -10,7 +10,8 @@ public class Activity implements Serializable {
     private String logoUrl;
     private String address;
     private String url;
-    private String description;
+    private String descriptionES;
+    private String descriptionEN;
     private float latitude;
     private float longitude;
 
@@ -81,12 +82,23 @@ public class Activity implements Serializable {
         return this;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionES() {
+        return descriptionES;
     }
 
-    public Activity setDescription(String description) {
-        this.description = description;
+    public Activity setDescriptionES(String descriptionES) {
+        this.descriptionES = descriptionES;
+        return this;
+    }
+
+    public String getDescriptionEN()
+    {
+        return descriptionEN;
+    }
+
+    public Activity setDescriptionEN(String descriptionEN)
+    {
+        this.descriptionEN = descriptionEN;
         return this;
     }
 

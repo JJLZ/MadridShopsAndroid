@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MadridShops</string>
+    <string name="activity_main__activities_button_text">Actividades</string>
+    <string name="activity_main__clear_cache_text">Borrar cache</string>
+    <string name="activity_main__shops_button_text">Tiendas</string>
+</resources>

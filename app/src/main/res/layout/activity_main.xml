@@ -27,7 +27,7 @@
 
         <Button
             android:id="@+id/activity_main__shops_button"
-            android:text="@string/activity_main__shop_button"
+            android:text="@string/activity_main__shops_button_text"
             android:background="@drawable/custom_button"
             style="@style/activity_main_button_style"
             tools:text="Shops"

@@ -52,7 +52,8 @@ public class ShopDAO implements DAOReadable<Shop>, DAOWritable<Shop> {
             long id = c.getLong(c.getColumnIndex(KEY_SHOP_ID));
             String name = c.getString(c.getColumnIndex(KEY_SHOP_NAME));
             String address = c.getString(c.getColumnIndex(KEY_SHOP_ADDRESS));
-            String description = c.getString(c.getColumnIndex(KEY_SHOP_DESCRIPTION));
+            String descriptionES = c.getString(c.getColumnIndex(KEY_SHOP_DESCRIPTION_ES));
+            String descriptionEN = c.getString(c.getColumnIndex(KEY_SHOP_DESCRIPTION_EN));
             String imageUrl = c.getString(c.getColumnIndex(KEY_SHOP_IMAGE_URL));
             String logoImageUrl = c.getString(c.getColumnIndex(KEY_SHOP_LOGO_IMAGE_URL));
             String url = c.getString(c.getColumnIndex(KEY_SHOP_URL));
@@ -61,7 +62,8 @@ public class ShopDAO implements DAOReadable<Shop>, DAOWritable<Shop> {
 
             Shop shop = Shop.of(id, name)
                     .setAddress(address)
-                    .setDescription(description)
+                    .setDescriptionES(descriptionES)
+                    .setDescriptionEN(descriptionEN)
                     .setImageUrl(imageUrl)
                     .setLogoUrl(logoImageUrl)
                     .setUrl(url)
@@ -125,7 +127,8 @@ public class ShopDAO implements DAOReadable<Shop>, DAOWritable<Shop> {
 
         contentValues.put(KEY_SHOP_NAME, shop.getName());
         contentValues.put(KEY_SHOP_ADDRESS, shop.getAddress());
-        contentValues.put(KEY_SHOP_DESCRIPTION, shop.getDescription());
+        contentValues.put(KEY_SHOP_DESCRIPTION_ES, shop.getDescriptionES());
+        contentValues.put(KEY_SHOP_DESCRIPTION_EN, shop.getDescriptionEN());
         contentValues.put(KEY_SHOP_IMAGE_URL, shop.getImageUrl());
         contentValues.put(KEY_SHOP_LOGO_IMAGE_URL, shop.getLogoUrl());
         contentValues.put(KEY_SHOP_URL, shop.getUrl());

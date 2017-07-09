@@ -14,6 +14,8 @@ import com.emprendesoft.madridshops.util.StaticMapImage;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,7 +44,17 @@ public class ShopDetailActivity extends AppCompatActivity {
 
             name.setText(shop.getName());
             address.setText(shop.getAddress());
-            description.setText(shop.getDescription());
+
+            //-- Spanish or English --
+            if (Locale.getDefault().getLanguage().equals("es"))
+            {
+                description.setText(shop.getDescriptionES());
+            }
+            else
+            {
+                description.setText(shop.getDescriptionEN());
+            }
+            //--
 
             Picasso.with(this)
                     .load(shop.getImageUrl())
