@@ -5,12 +5,12 @@ This is the practice for Advanced Android Programming Course of the [KeepCodingÂ
 ### Objective:
 The objective is for the student to put into practice the knowledge acquired during the course Advanced Android. The main objective is to put into practice the knowledge acquired during the course such as: persistence of data using SQLite, downloading and decoding information contained in JSON format asynchronously using Volley and related classes. Produce high quality, maintainable and reliable code. Clean architecture would be valued: interactors, managers, etc.
 
+### App Description:
+Create a mobile application to display information of activities and shops in Madrid, even when the user has no Internet connection. Activities and shops should be shown in a Google Maps.
+
 ![](https://github.com/JJLZ/MadridShopsAndroid/blob/master/01.png)
 ![](https://github.com/JJLZ/MadridShopsAndroid/blob/master/02.png)
 ![](https://github.com/JJLZ/MadridShopsAndroid/blob/master/03.png)
-
-### App Description:
-Create a mobile application to display information of activities and shops in Madrid, even when the user has no Internet connection. Activities and shops should be shown in a Google Maps.
 
 ### Requirements:
 1. When starting the App for the first time, if there's Internet connection it will download all information from the activities and shops access point including all images.
