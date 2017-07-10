@@ -1,8 +1,12 @@
 package com.emprendesoft.madridshops.activities;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -57,6 +61,8 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 
 public class ShopListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener
 {
+    public final static int USER_PERMISSION_FINE_LOCATION = 101;
+
     public GoogleMap map;
     @BindView(R.id.activity_shop_list__progress_bar)
     ProgressBar mProgressBar;
@@ -265,6 +271,48 @@ public class ShopListActivity extends AppCompatActivity implements SearchView.On
         map.setMapType(MAP_TYPE_NORMAL);
         map.getUiSettings().setRotateGesturesEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
+
+        enableUserLocation(map);
+    }
+
+    private void enableUserLocation(GoogleMap googleMap)
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            googleMap.setMyLocationEnabled(true);
+        } else
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, USER_PERMISSION_FINE_LOCATION);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode)
+        {
+            case USER_PERMISSION_FINE_LOCATION:
+
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        this.map.setMyLocationEnabled(true);
+                    }
+                    else
+                    {
+                        Toast.makeText(this, R.string.location_permission_message, Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                }
+
+                break;
+        }
     }
 
     private void putShopPinsOnMap(Shops shops)

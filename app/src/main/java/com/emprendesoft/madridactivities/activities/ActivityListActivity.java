@@ -1,17 +1,21 @@
 package com.emprendesoft.madridactivities.activities;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.emprendesoft.Utils.Utilities;
@@ -53,6 +57,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.emprendesoft.madridshops.activities.ShopListActivity.USER_PERMISSION_FINE_LOCATION;
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 
 public class ActivityListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener
@@ -83,7 +88,6 @@ public class ActivityListActivity extends AppCompatActivity implements SearchVie
 
     private void initializeMap()
     {
-
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.activity_activity_list__map);
 
         mapFragment.getMapAsync(new OnMapReadyCallback()
@@ -179,6 +183,48 @@ public class ActivityListActivity extends AppCompatActivity implements SearchVie
         map.setMapType(MAP_TYPE_NORMAL);
         map.getUiSettings().setRotateGesturesEnabled(false);
         map.getUiSettings().setZoomControlsEnabled(true);
+
+        enableUserLocation(map);
+    }
+
+    private void enableUserLocation(GoogleMap googleMap)
+    {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            googleMap.setMyLocationEnabled(true);
+        } else
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, USER_PERMISSION_FINE_LOCATION);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode)
+        {
+            case USER_PERMISSION_FINE_LOCATION:
+
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        this.map.setMyLocationEnabled(true);
+                    }
+                    else
+                    {
+                        Toast.makeText(this, R.string.location_permission_message, Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                }
+
+                break;
+        }
     }
 
     private void configActivitiesFragment(final Activities activities)
@@ -223,7 +269,6 @@ public class ActivityListActivity extends AppCompatActivity implements SearchVie
 
     private void obtainActivityList()
     {
-
         mProgressBar.setVisibility(View.VISIBLE);
 
         ANetworkManager manager = new GetAllActivitiesManagerImpl(this);

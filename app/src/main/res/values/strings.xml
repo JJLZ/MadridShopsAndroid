@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">MadridShops</string>
     <string name="activity_main__clear_cache_text">Clear cache</string>
+    <string name="location_permission_message">This app requires location permissions to be granted.</string>
 </resources>
