@@ -5,48 +5,54 @@ import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-public class ShopService extends IntentService
+import com.emprendesoft.madridshops.domain.Util.ClearCache;
+
+
+public class ClearCacheService extends IntentService
 {
-    public ShopService(String name)
+    private static Context mContext;
+
+    public ClearCacheService(String name)
     {
         super(name);
     }
 
-    public ShopService()
+    public ClearCacheService()
     {
         this("Default");
     }
 
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent)
-    {
-        Log.d("Service", "ShopService");
-    }
-
     private static Intent newIntent(Context context)
     {
-        return new Intent(context, ShopService.class);
+        return new Intent(context, ClearCacheService.class);
     }
 
-    public static void startRunningService(Context context)
+    public static void scheduleCacheCleaning(Context context, int sec)
     {
-        Intent intent = ShopService.newIntent(context);
+        mContext = context;
+
+        Intent intent = ClearCacheService.newIntent(context);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000 * 5, pendingIntent);
+        alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + (1000 * sec), pendingIntent);
     }
 
-    public static void stopRunningService(Context context)
+    public static void cancelScheduledCacheCleaning(Context context)
     {
-        Intent intent = ShopService.newIntent(context);
+        Intent intent = ClearCacheService.newIntent(context);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getService(context, 0, intent, 0);
 
         alarmManager.cancel(pendingIntent);
     }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent)
+    {
+        ClearCache.clearAllCache(mContext);
+    }
+
 }

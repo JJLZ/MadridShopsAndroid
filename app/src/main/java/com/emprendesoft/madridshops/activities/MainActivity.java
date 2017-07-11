@@ -8,15 +8,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.emprendesoft.madridshops.R;
-import com.emprendesoft.madridshops.domain.activities.interactors.SetAllActivitesCachedInteractorImpl;
-import com.emprendesoft.madridshops.domain.activities.interactors.SetAllActivitiesCachedInteractor;
-import com.emprendesoft.madridshops.domain.shops.interactors.ClearCacheInteractor;
-import com.emprendesoft.madridshops.domain.shops.interactors.ClearCacheInteractorImp;
-import com.emprendesoft.madridshops.domain.shops.interactors.SetAllShopsAreCachedInteractor;
-import com.emprendesoft.madridshops.domain.shops.interactors.SetAllShopsAreCachedInteractorImpl;
-import com.emprendesoft.madridshops.domain.shops.managers.cache.ClearCacheManager;
-import com.emprendesoft.madridshops.domain.shops.managers.cache.ClearCacheManagerDAOImp;
+import com.emprendesoft.madridshops.domain.Util.ClearCache;
 import com.emprendesoft.madridshops.navigator.Navigator;
+import com.emprendesoft.madridshops.services.ClearCacheService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -134,20 +128,10 @@ public class MainActivity extends AppCompatActivity {
         return out.toString();
     }
 
-    @OnClick(R.id.activity_main__clear_cache) void clearCache() {
-
-        ClearCacheManager clearCacheManager = new ClearCacheManagerDAOImp(this);
-        ClearCacheInteractor clearCacheInteractor = new ClearCacheInteractorImp(clearCacheManager);
-        clearCacheInteractor.execute(new Runnable() {
-            @Override
-            public void run() {
-                SetAllShopsAreCachedInteractor setAllShopsAreCachedInteractor = new SetAllShopsAreCachedInteractorImpl(getBaseContext());
-                setAllShopsAreCachedInteractor.execute(false);
-
-                SetAllActivitiesCachedInteractor setAllActivitiesCachedInteractor = new SetAllActivitesCachedInteractorImpl(getApplicationContext());
-                setAllActivitiesCachedInteractor.execute(false);
-            }
-        });
+    @OnClick(R.id.activity_main__clear_cache) void clearCache()
+    {
+        ClearCache.clearAllCache(this);
+        ClearCacheService.cancelScheduledCacheCleaning(this);
     }
 }
 

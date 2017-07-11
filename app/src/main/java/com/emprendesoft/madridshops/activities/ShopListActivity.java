@@ -42,6 +42,7 @@ import com.emprendesoft.madridshops.domain.shops.model.Shop;
 import com.emprendesoft.madridshops.domain.shops.model.Shops;
 import com.emprendesoft.madridshops.fragments.ShopsFragment;
 import com.emprendesoft.madridshops.navigator.Navigator;
+import com.emprendesoft.madridshops.services.ClearCacheService;
 import com.emprendesoft.madridshops.util.map.MapPinnable;
 import com.emprendesoft.madridshops.util.map.MapUtil;
 import com.emprendesoft.madridshops.util.map.model.ShopPin;
@@ -179,9 +180,13 @@ public class ShopListActivity extends AppCompatActivity implements SearchView.On
                             @Override
                             public void run()
                             {
-
                                 SetAllShopsAreCachedInteractor setAllShopsAreCachedInteractor = new SetAllShopsAreCachedInteractorImpl(getBaseContext());
                                 setAllShopsAreCachedInteractor.execute(true);
+
+                                //-- Schedule cache cleaning --
+                                ClearCacheService.cancelScheduledCacheCleaning(getBaseContext());
+                                ClearCacheService.scheduleCacheCleaning(getBaseContext(), getBaseContext().getResources().getInteger(R.integer.SEVEN_DAYS_IN_SECONDS));
+                                //--
                             }
                         });
 
@@ -250,7 +255,6 @@ public class ShopListActivity extends AppCompatActivity implements SearchView.On
             @Override
             public void onMapReady(GoogleMap googleMap)
             {
-
                 if (googleMap == null)
                 {
                     Toast.makeText(getApplicationContext(), "Sorry! unable to create maps", Toast.LENGTH_SHORT).show();

@@ -43,6 +43,7 @@ import com.emprendesoft.madridshops.domain.activities.network.ANetworkManager;
 import com.emprendesoft.madridshops.domain.activities.network.GetAllActivitiesManagerImpl;
 import com.emprendesoft.madridshops.domain.shops.interactors.InteractorErrorCompletion;
 import com.emprendesoft.madridshops.navigator.Navigator;
+import com.emprendesoft.madridshops.services.ClearCacheService;
 import com.emprendesoft.madridshops.util.map.MapPinnable;
 import com.emprendesoft.madridshops.util.map.MapUtil;
 import com.emprendesoft.madridshops.views.OnElementClick;
@@ -229,7 +230,6 @@ public class ActivityListActivity extends AppCompatActivity implements SearchVie
 
     private void configActivitiesFragment(final Activities activities)
     {
-
         mActivitiesFragment.setActivities(activities);
 
         mActivitiesFragment.setOnElementClickListener(new OnElementClick<Activity>()
@@ -290,6 +290,11 @@ public class ActivityListActivity extends AppCompatActivity implements SearchVie
                             {
                                 SetAllActivitiesCachedInteractor setAllActivitiesCachedInteractor = new SetAllActivitesCachedInteractorImpl(getBaseContext());
                                 setAllActivitiesCachedInteractor.execute(true);
+
+                                //-- Schedule cache cleaning --
+                                ClearCacheService.cancelScheduledCacheCleaning(getBaseContext());
+                                ClearCacheService.scheduleCacheCleaning(getBaseContext(), getBaseContext().getResources().getInteger(R.integer.SEVEN_DAYS_IN_SECONDS));
+                                //--
                             }
                         });
 
