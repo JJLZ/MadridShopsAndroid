@@ -27,10 +27,10 @@ Create a mobile application to display information of activities and shops in Ma
 
 ### Used tools:
 * Android Stuido 2.3.3
-* Java
-* Dependencies: `Picasso v2.5.2, ButterKnife v8.6.0, Multidex v1.0.1, Volley v1.0.0, Gson v2.8.1, Google Maps (play-services-maps v11.0.1), okhttp v2.4.0`
-* Git
+* Java v1.8.0_131
+* SmartGit v17
 * Sketch v45.1
+* Dependencies: `Picasso v2.5.2, ButterKnife v8.6.0, Multidex v1.0.1, Volley v1.0.0, Gson v2.8.1, Google Maps (play-services-maps v11.0.1), okhttp v2.4.0`
 * Web Services:
 
 	`GET http://madrid-shops.com/json_new/getShops.php`
