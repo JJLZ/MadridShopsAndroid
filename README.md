@@ -34,4 +34,5 @@ Create a mobile application to display information of activities and shops in Ma
 * Web Services:
 
 	`GET http://madrid-shops.com/json_new/getShops.php`
+	
 	`GET http://madrid-shops.com/json_new/getActivities.php`
